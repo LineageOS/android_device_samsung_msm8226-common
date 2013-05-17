@@ -66,7 +66,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ril.subscription.types=NV,RUIM
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.heapstartsize=8m \
+    dalvik.vm.heapstartsize=16m \
     dalvik.vm.heapgrowthlimit=192m \
     dalvik.vm.heapsize=256m \
     dalvik.vm.heaptargetutilization=0.75 \
