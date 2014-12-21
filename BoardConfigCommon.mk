@@ -21,6 +21,7 @@ TARGET_SPECIFIC_HEADER_PATH := device/samsung/msm8226-common/include
 
 # Architecture
 TARGET_CPU_VARIANT := krait
+TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
 
 # Audio
 AUDIO_FEATURE_DISABLED_ANC_HEADSET := true
@@ -58,6 +59,9 @@ OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 
 # Encryption
 TARGET_HW_DISK_ENCRYPTION := true
+
+# Fonts
+EXTENDED_FONT_FOOTPRINT := true
 
 # Init
 TARGET_INIT_VENDOR_LIB := libinit_msm
