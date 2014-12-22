@@ -81,7 +81,7 @@ import java.util.Random;
 
 
 /**
- * RIL customization for Galaxy S3 Neo Single-sim devices
+ * RIL customization for Samsung MSM8226 Dual-sim devices
  *
  * {@hide}
  */
@@ -97,14 +97,18 @@ public class SamsungMSM8226DSRIL extends RIL implements CommandsInterface {
     private static final int RIL_UNSOL_STK_CC_ALPHA_NOTIFY_I9300I = 1041;
     private static final int RIL_UNSOL_UICC_SUBSCRIPTION_STATUS_CHANGED_I9300I = 11031;
 
+    private Message mPendingGetSimStatus;
 
-
-
-    public SamsungMSM8226DSRIL(Context context, int networkMode, int cdmaSubscription,Integer instanceId) {
-        super(context, networkMode, cdmaSubscription,  instanceId);
+    public SamsungMSM8226DSRIL(Context context, int networkMode, int cdmaSubscription) {
+        super(context, networkMode, cdmaSubscription, null);
         mQANElements = 6;
     }
 
+    public SamsungMSM8226DSRIL(Context context, int preferredNetworkType,
+            int cdmaSubscription, Integer instanceId) {
+        super(context, preferredNetworkType, cdmaSubscription, instanceId);
+        mQANElements = 6;
+    }
 
     @Override
     public void
@@ -118,9 +122,9 @@ public class SamsungMSM8226DSRIL extends RIL implements CommandsInterface {
 
         rr.mParcel.writeString(address);
         rr.mParcel.writeInt(clirMode);
-        rr.mParcel.writeInt(0);         // CallDetails.call_type
-        rr.mParcel.writeInt(1);         // CallDetails.call_domain
-        rr.mParcel.writeString("");     // CallDetails.getCsvFromExtras
+        rr.mParcel.writeInt(0);     // CallDetails.call_type
+        rr.mParcel.writeInt(1);     // CallDetails.call_domain
+        rr.mParcel.writeString(""); // CallDetails.getCsvFromExtras
 
         if (uusInfo == null) {
             rr.mParcel.writeInt(0); // UUS information is absent
@@ -271,6 +275,26 @@ public class SamsungMSM8226DSRIL extends RIL implements CommandsInterface {
         }
 
         return response;
+    }
+
+    @Override
+    public void
+    getIccCardStatus(Message result) {
+        if (mState != RadioState.RADIO_ON) {
+            mPendingGetSimStatus = result;
+        } else {
+            super.getIccCardStatus(result);
+        }
+    }
+
+    @Override
+    protected void
+    switchToRadioState(RadioState newState) {
+        super.switchToRadioState(newState);
+        if (newState == RadioState.RADIO_ON && mPendingGetSimStatus != null) {
+            super.getIccCardStatus(mPendingGetSimStatus);
+            mPendingGetSimStatus = null;
+        }
     }
 
     @Override
@@ -477,3 +501,4 @@ public class SamsungMSM8226DSRIL extends RIL implements CommandsInterface {
         riljLog("parcel position=" + p.dataPosition() + ": " + s);
     }
 }
+
