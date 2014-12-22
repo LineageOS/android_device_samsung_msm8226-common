@@ -55,17 +55,17 @@ camera_module_t HAL_MODULE_INFO_SYM = {
          .module_api_version = CAMERA_MODULE_API_VERSION_1_0,
          .hal_api_version = HARDWARE_HAL_API_VERSION,
          .id = CAMERA_HARDWARE_MODULE_ID,
-         .name = "Samsung msm8226 Camera Wrapper",
+         .name = "Samsung MSM8226 Camera Wrapper",
          .author = "The CyanogenMod Project",
          .methods = &camera_module_methods,
          .dso = NULL, /* remove compilation warnings */
          .reserved = {0}, /* remove compilation warnings */
     },
-
     .get_number_of_cameras = camera_get_number_of_cameras,
     .get_camera_info = camera_get_camera_info,
     .set_callbacks = NULL, /* remove compilation warnings */
     .get_vendor_tag_ops = NULL, /* remove compilation warnings */
+    .open_legacy = NULL, /* remove compilation warnings */
     .reserved = {0}, /* remove compilation warnings */
 };
 
@@ -91,7 +91,8 @@ static int check_vendor_module()
         return 0;
 
     rv = hw_get_module_by_class("camera", "vendor",
-            (const hw_module_t**)&gVendorModule);
+            (const hw_module_t **)&gVendorModule);
+
     if (rv)
         ALOGE("failed to open vendor camera module");
     return rv;
@@ -120,20 +121,20 @@ static char *camera_fixup_getparams(int id, const char *settings)
      * this can be turned off, fixup the params to tell the Camera
      * that it really is okay to turn it off.
      */
-    const char* hfrValues = params.get(KEY_VIDEO_HFR_VALUES);
+    const char *hfrValues = params.get(KEY_VIDEO_HFR_VALUES);
     if (hfrValues && *hfrValues && ! strstr(hfrValues, "off")) {
         char tmp[strlen(hfrValues) + 4 + 1];
         sprintf(tmp, "%s,off", hfrValues);
         params.set(KEY_VIDEO_HFR_VALUES, tmp);
     }
 
+    android::String8 strParams = params.flatten();
+    char *ret = strdup(strParams.string());
+
 #if !LOG_NDEBUG
     ALOGV("%s: fixed parameters:", __FUNCTION__);
     params.dump();
 #endif
-
-    android::String8 strParams = params.flatten();
-    char *ret = strdup(strParams.string());
 
     return ret;
 }
@@ -145,14 +146,14 @@ static char *camera_fixup_setparams(struct camera_device *device,
     android::CameraParameters params;
     params.unflatten(android::String8(settings));
 
-    const char* recordingHint = params.get(android::CameraParameters::KEY_RECORDING_HINT);
+    const char *recordingHint = params.get(android::CameraParameters::KEY_RECORDING_HINT);
     bool isVideo = recordingHint && !strcmp(recordingHint, "true");
 
     if (isVideo) {
-        params.set("dis", "disable");
-        params.set(android::CameraParameters::KEY_ZSL, "off");
+        params.set(android::CameraParameters::KEY_DIS, android::CameraParameters::DIS_DISABLE);
+        params.set(android::CameraParameters::KEY_ZSL, android::CameraParameters::ZSL_OFF);
     } else {
-        params.set(android::CameraParameters::KEY_ZSL, "on");
+        params.set(android::CameraParameters::KEY_ZSL, android::CameraParameters::ZSL_ON);
     }
 
 #if !LOG_NDEBUG
@@ -220,8 +221,7 @@ static void camera_set_callbacks(struct camera_device *device,
     if (!device)
         return;
 
-    VENDOR_CALL(device, set_callbacks, notify_cb, data_cb, data_cb_timestamp,
-            get_memory, user);
+    VENDOR_CALL(device, set_callbacks, notify_cb, data_cb, data_cb_timestamp, get_memory, user);
 }
 
 static void camera_enable_msg_type(struct camera_device *device,
@@ -399,8 +399,7 @@ static int camera_cancel_picture(struct camera_device *device)
     return VENDOR_CALL(device, cancel_picture);
 }
 
-static int camera_set_parameters(struct camera_device *device,
-        const char *params)
+static int camera_set_parameters(struct camera_device *device, const char *params)
 {
     ALOGV("%s->%08X->%08X", __FUNCTION__, (uintptr_t)device,
             (uintptr_t)(((wrapper_camera_device_t*)device)->vendor));
@@ -646,3 +645,4 @@ static int camera_get_camera_info(int camera_id, struct camera_info *info)
         return 0;
     return gVendorModule->get_camera_info(camera_id, info);
 }
+
