@@ -62,7 +62,6 @@ import com.android.internal.telephony.cdma.CdmaInformationRecords;
 import com.android.internal.telephony.cdma.CdmaSmsBroadcastConfigInfo;
 import com.android.internal.telephony.dataconnection.DcFailCause;
 import com.android.internal.telephony.dataconnection.DataCallResponse;
-import com.android.internal.telephony.dataconnection.DataProfileOmh;
 import com.android.internal.telephony.dataconnection.DataProfile;
 
 import java.io.ByteArrayInputStream;
