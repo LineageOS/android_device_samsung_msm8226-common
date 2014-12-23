@@ -108,8 +108,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/keylayout/synaptics_rmi4_i2c.kl:system/usr/keylayout/synaptics_rmi4_i2c.kl
 
 # Keystore
-PRODUCT_PACKAGES += \
-    keystore.msm8226
+#PRODUCT_PACKAGES += \
+#    keystore.msm8226
 
 # Lights
 PRODUCT_PACKAGES += \
