@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Inherit from qcom-common
+-include device/samsung/qcom-common/BoardConfigCommon.mk
+
 LOCAL_PATH := device/samsung/msm8226-common
 
 TARGET_SPECIFIC_HEADER_PATH := device/samsung/msm8226-common/include
-
-# Inherit from qcom-common
--include device/samsung/qcom-common/BoardConfigCommon.mk
 
 # Architecture
 TARGET_CPU_VARIANT := krait
