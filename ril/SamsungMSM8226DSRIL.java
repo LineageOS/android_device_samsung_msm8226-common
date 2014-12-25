@@ -98,14 +98,8 @@ public class SamsungMSM8226DSRIL extends RIL implements CommandsInterface {
 
     private Message mPendingGetSimStatus;
 
-    public SamsungMSM8226DSRIL(Context context, int networkMode, int cdmaSubscription) {
-        super(context, networkMode, cdmaSubscription, null);
-        mQANElements = 6;
-    }
-
-    public SamsungMSM8226DSRIL(Context context, int preferredNetworkType,
-            int cdmaSubscription, Integer instanceId) {
-        super(context, preferredNetworkType, cdmaSubscription, instanceId);
+    public SamsungMSM8226DSRIL(Context context, int networkMode, int cdmaSubscription,Integer instanceId) {
+        super(context, networkMode, cdmaSubscription,  instanceId);
         mQANElements = 6;
     }
 
@@ -149,6 +143,15 @@ public class SamsungMSM8226DSRIL extends RIL implements CommandsInterface {
         rr.mParcel.writeInt(0);
 
         send(rr);
+    }
+
+   @Override
+    public void getIccCardStatus(Message result) {
+        if (this.mState != RadioState.RADIO_ON) {
+            this.mPendingGetSimStatus = result;
+        } else {
+            super.getIccCardStatus(result);
+        }
     }
 
     @Override
@@ -274,26 +277,6 @@ public class SamsungMSM8226DSRIL extends RIL implements CommandsInterface {
         }
 
         return response;
-    }
-
-    @Override
-    public void
-    getIccCardStatus(Message result) {
-        if (mState != RadioState.RADIO_ON) {
-            mPendingGetSimStatus = result;
-        } else {
-            super.getIccCardStatus(result);
-        }
-    }
-
-    @Override
-    protected void
-    switchToRadioState(RadioState newState) {
-        super.switchToRadioState(newState);
-        if (newState == RadioState.RADIO_ON && mPendingGetSimStatus != null) {
-            super.getIccCardStatus(mPendingGetSimStatus);
-            mPendingGetSimStatus = null;
-        }
     }
 
     @Override
@@ -485,6 +468,52 @@ public class SamsungMSM8226DSRIL extends RIL implements CommandsInterface {
 
         if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
 
+        send(rr);
+    }
+
+   @Override
+    protected void switchToRadioState(RadioState newState) {
+        super.switchToRadioState(newState);
+        if (newState == RadioState.RADIO_ON && this.mPendingGetSimStatus != null) {
+            super.getIccCardStatus(this.mPendingGetSimStatus);
+            this.mPendingGetSimStatus = null;
+        }
+    }
+
+
+   @Override
+    public void setUiccSubscription(int slotId, int appIndex, int subId,
+            int subStatus, Message result) {
+        //Note: This RIL request is also valid for SIM and RUIM (ICC card)
+        RILRequest rr = RILRequest.obtain(115, result);
+
+        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest)
+                + " slot: " + slotId + " appIndex: " + appIndex
+                + " subId: " + subId + " subStatus: " + subStatus);
+
+        rr.mParcel.writeInt(slotId);
+        rr.mParcel.writeInt(appIndex);
+        rr.mParcel.writeInt(subId);
+        rr.mParcel.writeInt(subStatus);
+
+        send(rr);
+    }
+
+   @Override
+    public void setDataAllowed(boolean allowed, Message result) {
+	int req = 123;
+        RILRequest rr;
+	if (allowed)
+        {
+            req = 116;
+            rr = RILRequest.obtain(req, result);
+        }
+        else
+        {
+            rr = RILRequest.obtain(req, result);
+            rr.mParcel.writeInt(1);
+            rr.mParcel.writeInt(allowed ? 1 : 0);
+        }
         send(rr);
     }
 
