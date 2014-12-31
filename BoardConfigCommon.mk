@@ -100,7 +100,6 @@ COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
 
 # SELinux
 -include device/qcom/sepolicy/sepolicy.mk
-BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/sepolicy
 
 # Vold
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
