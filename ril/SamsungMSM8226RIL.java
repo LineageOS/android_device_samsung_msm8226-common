@@ -43,8 +43,6 @@ public class SamsungMSM8226RIL extends RIL {
     private static final int RIL_UNSOL_WB_AMR_STATE = 11017;
     private static final int RIL_UNSOL_RESPONSE_HANDOVER = 11021;
 
-    private Message mPendingGetSimStatus;
-
     public SamsungMSM8226RIL(Context context, int networkMode, int cdmaSubscription) {
         super(context, networkMode, cdmaSubscription, null);
         mQANElements = 6;
@@ -207,26 +205,6 @@ public class SamsungMSM8226RIL extends RIL {
         }
 
         return response;
-    }
-
-    @Override
-    public void
-    getIccCardStatus(Message result) {
-        if (mState != RadioState.RADIO_ON) {
-            mPendingGetSimStatus = result;
-        } else {
-            super.getIccCardStatus(result);
-        }
-    }
-
-    @Override
-    protected void
-    switchToRadioState(RadioState newState) {
-        super.switchToRadioState(newState);
-        if (newState == RadioState.RADIO_ON && mPendingGetSimStatus != null) {
-            super.getIccCardStatus(mPendingGetSimStatus);
-            mPendingGetSimStatus = null;
-        }
     }
 
     @Override

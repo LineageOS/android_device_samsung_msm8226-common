@@ -96,8 +96,6 @@ public class SamsungMSM8226DSRIL extends RIL implements CommandsInterface {
     private static final int RIL_UNSOL_STK_CC_ALPHA_NOTIFY_I9300I = 1041;
     private static final int RIL_UNSOL_UICC_SUBSCRIPTION_STATUS_CHANGED_I9300I = 11031;
 
-    private Message mPendingGetSimStatus;
-
     public SamsungMSM8226DSRIL(Context context, int networkMode, int cdmaSubscription,Integer instanceId) {
         super(context, networkMode, cdmaSubscription,  instanceId);
         mQANElements = 6;
@@ -143,15 +141,6 @@ public class SamsungMSM8226DSRIL extends RIL implements CommandsInterface {
         rr.mParcel.writeInt(0);
 
         send(rr);
-    }
-
-   @Override
-    public void getIccCardStatus(Message result) {
-        if (this.mState != RadioState.RADIO_ON) {
-            this.mPendingGetSimStatus = result;
-        } else {
-            super.getIccCardStatus(result);
-        }
     }
 
     @Override
@@ -470,16 +459,6 @@ public class SamsungMSM8226DSRIL extends RIL implements CommandsInterface {
 
         send(rr);
     }
-
-   @Override
-    protected void switchToRadioState(RadioState newState) {
-        super.switchToRadioState(newState);
-        if (newState == RadioState.RADIO_ON && this.mPendingGetSimStatus != null) {
-            super.getIccCardStatus(this.mPendingGetSimStatus);
-            this.mPendingGetSimStatus = null;
-        }
-    }
-
 
    @Override
     public void setUiccSubscription(int slotId, int appIndex, int subId,
