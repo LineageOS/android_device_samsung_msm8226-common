@@ -98,9 +98,6 @@ BOARD_RECOVERY_SWIPE := true
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
 COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
 
-# SELinux
--include device/qcom/sepolicy/sepolicy.mk
-
 # Vold
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun%d/file
