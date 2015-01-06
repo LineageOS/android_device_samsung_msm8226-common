@@ -37,7 +37,6 @@ QCOM_BT_USE_SMD_TTY := true
 TARGET_BOOTLOADER_BOARD_NAME := MSM8226
 
 # Camera
-BOARD_USES_LEGACY_MMAP := true
 TARGET_PROVIDES_CAMERA_HAL := true
 USE_DEVICE_SPECIFIC_CAMERA := true
 
@@ -64,9 +63,6 @@ MAX_EGL_CACHE_KEY_SIZE := 12*1024
 # binaries. Decrease the size if RAM or Flash Storage size is a limitation
 # of the device.
 MAX_EGL_CACHE_SIZE := 2048*1024
-
-# Encryption
-TARGET_HW_DISK_ENCRYPTION := true
 
 # Fonts
 EXTENDED_FONT_FOOTPRINT := true
