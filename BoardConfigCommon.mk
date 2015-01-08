@@ -23,7 +23,6 @@ TARGET_SPECIFIC_HEADER_PATH := device/samsung/msm8226-common/include
 TARGET_CPU_VARIANT := krait
 
 # Audio
-AUDIO_FEATURE_ENABLED_FM := true
 BOARD_USES_ALSA_AUDIO := true
 
 # Bluetooth
@@ -62,6 +61,10 @@ MAX_EGL_CACHE_KEY_SIZE := 12*1024
 # binaries. Decrease the size if RAM or Flash Storage size is a limitation
 # of the device.
 MAX_EGL_CACHE_SIZE := 2048*1024
+
+# FM
+AUDIO_FEATURE_ENABLED_FM := true
+TARGET_QCOM_NO_FM_FIRMWARE := true
 
 # Fonts
 EXTENDED_FONT_FOOTPRINT := true
