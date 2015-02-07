@@ -417,7 +417,7 @@
 	<!-- Recording Scenario	-->
 	<path name="rec-main-mic">
 		<path name="main-mic" />
-		<ctl name="ADC1 Volume" value="13" />
+		<ctl name="ADC1 Volume" value="19" />
 		<ctl name="DEC1 Volume" value="84" />
 	</path>
 
