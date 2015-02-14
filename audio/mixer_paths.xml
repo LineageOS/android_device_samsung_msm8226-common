@@ -325,7 +325,7 @@
 
 	<path name="speaker">
 		<path name="spk" />
-		<ctl name="RX4 Digital Volume" value="83" />
+		<ctl name="RX4 Digital Volume" value="80" />
 		<ctl name="SPK DRV Volume" value="7" />
 		<ctl name="COMP0 Switch" value="0" />
 	</path>
@@ -588,13 +588,13 @@
 
 	<path name="voice-call-speaker">
 		<path name="spk" />
-		<ctl name="RX4 Digital Volume" value="93" />
+		<ctl name="RX4 Digital Volume" value="87" />
 		<ctl name="SPK DRV Volume" value="8" />
 	</path>
 
 	<path name="voice-call-speaker-extra-vol">
 		<path name="spk" />
-		<ctl name="RX4 Digital Volume" value="93" />
+		<ctl name="RX4 Digital Volume" value="87" />
 		<ctl name="SPK DRV Volume" value="8" />
 	</path>
 
