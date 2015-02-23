@@ -94,9 +94,10 @@ ALL_DEFAULT_INSTALLED_MODULES += $(MC_SYMLINKS)
 
 MODEM_IMAGES := \
     modem.b00 modem.b01 modem.b02 modem.b03 modem.b04 modem.b05 \
-    modem.b08 modem.b10 modem.b11 modem.b13 modem.b14 modem.b15 \
-    modem.b16 modem.b17 modem.b18 modem.b19 modem.b20 modem.b21 \
-    modem.b22 modem.b25 modem.b26 modem.b27 modem.mdt
+    modem.b06 modem.b08 modem.b09 modem.b10 modem.b11 modem.b13 \
+    modem.b14 modem.b15 modem.b16 modem.b17 modem.b18 modem.b19 \
+    modem.b20 modem.b21 modem.b22 modem.b23 modem.b24 modem.b25 \
+    modem.b26 modem.b27 modem.b28 modem.b29 modem.mdt
 
 MODEM_SYMLINKS := $(addprefix $(TARGET_OUT_ETC)/firmware/,$(notdir $(MODEM_IMAGES)))
 $(MODEM_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
@@ -167,6 +168,18 @@ $(SSHDCPAP_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 
 ALL_DEFAULT_INSTALLED_MODULES += $(SSHDCPAP_SYMLINKS)
 
+TBASE_IMAGES := \
+    tbase300.b00 tbase300.b01 tbase300.b02 tbase300.b03 tbase300.mdt
+
+SSHDCPAP_SYMLINKS := $(addprefix $(TARGET_OUT_ETC)/firmware/,$(notdir $(SSHDCPAP_IMAGES)))
+$(TBASE_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo "SSHDCPAP firmware link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /firmware/image/$(notdir $@) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(TBASE_SYMLINKS)
+
 TZPR_IMAGES := \
     tzpr25.b00 tzpr25.b01 tzpr25.b02 tzpr25.b03 tzpr25.mdt
 
@@ -178,6 +191,18 @@ $(TZPR_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	$(hide) ln -sf /firmware/image/$(notdir $@) $@
 
 ALL_DEFAULT_INSTALLED_MODULES += $(TZPR_SYMLINKS)
+
+TZ_CCM_IMAGES := \
+    tz_ccm.b00 tz_ccm.b01 tz_ccm.b02 tz_ccm.b03 tz_ccm.mdt
+
+TZ_CCM_SYMLINKS := $(addprefix $(TARGET_OUT_ETC)/firmware/,$(notdir $(TZ_CCM_IMAGES)))
+$(TZ_CCM_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo "TZ_CCM firmware link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /firmware/image/$(notdir $@) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(TZ_CCM_SYMLINKS)
 
 VENUS_IMAGES := \
     venus.b00 venus.b01 venus.b02 venus.b03 venus.b04 venus.mdt
