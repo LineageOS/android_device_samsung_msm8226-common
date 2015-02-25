@@ -93,6 +93,15 @@ TARGET_POWERHAL_VARIANT := qcom
 # Recovery fast wipe
 COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
 
+# SELinux
+-include device/qcom/sepolicy/sepolicy.mk
+BOARD_SEPOLICY_DIRS += device/samsung/msm8226-common/sepolicy
+
+BOARD_SEPOLICY_UNION += \
+       hostapd.te \
+       platform_app.te \
+       kernel.te
+
 # Wifi
 BOARD_HAS_QCOM_WLAN              := true
 BOARD_HAS_QCOM_WLAN_SDK          := true
