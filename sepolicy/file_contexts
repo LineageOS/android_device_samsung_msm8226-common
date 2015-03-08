@@ -21,8 +21,11 @@
 /dev/block/mmcblk1(.*)                                        u:object_r:mmc_block_device:s0
 
 # Sensors
+/dev/alps_io                                                  u:object_r:io_device:s0
 /efs/FactoryApp/baro_delta                                    u:object_r:sensors_efs_file:s0
 /efs/gyro_cal_data                                            u:object_r:sensors_efs_file:s0
+/efs/prox_cal                                                 u:object_r:sensors_efs_file:s0
+
 
 # WiFi
 /data/.wifiver.info                                           u:object_r:wifi_data_file:s0
