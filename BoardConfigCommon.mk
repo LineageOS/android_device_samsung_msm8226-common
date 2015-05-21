@@ -94,9 +94,6 @@ TARGET_BOARD_PLATFORM_GPU := qcom-adreno305
 TARGET_POWERHAL_SET_INTERACTIVE_EXT := $(LOCAL_PATH)/power/power_ext.c
 TARGET_POWERHAL_VARIANT := qcom
 
-# Recovery fast wipe
-COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
-
 # SELinux
 -include device/qcom/sepolicy/sepolicy.mk
 BOARD_SEPOLICY_DIRS += device/samsung/msm8226-common/sepolicy
