@@ -70,10 +70,6 @@ PRODUCT_PACKAGES += \
     hwcomposer.msm8226 \
     memtrack.msm8226
 
-# Doze
-PRODUCT_PACKAGES += \
-    SamsungDoze
-
 # Ebtables
 PRODUCT_PACKAGES += \
     ebtables \
