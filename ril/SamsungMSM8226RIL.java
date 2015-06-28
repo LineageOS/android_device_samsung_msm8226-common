@@ -301,6 +301,7 @@ public class SamsungMSM8226RIL extends RIL {
         }
         return rr;
     }
+
     private Object
     responseDataRegistrationState(Parcel p) {
         String response[] = (String[])responseStrings(p); // all data from parcell get popped
@@ -315,7 +316,7 @@ public class SamsungMSM8226RIL extends RIL {
         }
         return response;
     }
-    
+
     /**
      * Set audio parameter "wb_amr" for HD-Voice (Wideband AMR).
      *
@@ -361,6 +362,7 @@ public class SamsungMSM8226RIL extends RIL {
     }
 
     static final int RIL_REQUEST_DIAL_EMERGENCY = 10016;
+
     private void
     dialEmergencyCall(String address, int clirMode, Message result) {
         RILRequest rr;
@@ -369,7 +371,10 @@ public class SamsungMSM8226RIL extends RIL {
         rr = RILRequest.obtain(RIL_REQUEST_DIAL_EMERGENCY, result);
         rr.mParcel.writeString(address + "/");
         rr.mParcel.writeInt(clirMode);
-        rr.mParcel.writeInt(0);  // UUS information is absent
+        rr.mParcel.writeInt(0);        // CallDetails.call_type
+        rr.mParcel.writeInt(3);        // CallDetails.call_domain
+        rr.mParcel.writeString("");    // CallDetails.getCsvFromExtra
+        rr.mParcel.writeInt(0);        // Unknown
 
         if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
 
