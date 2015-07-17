@@ -1,3 +1,6 @@
+# Art
+dalvik.vm.dex2oat-swap=false
+
 # Audio
 media.aac_51_output_enabled=true
 mm.enable.smoothstreaming=true
