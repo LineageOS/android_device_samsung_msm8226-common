@@ -19,7 +19,6 @@ package com.android.internal.telephony;
 import static com.android.internal.telephony.RILConstants.*;
 
 import android.content.Context;
-import android.media.AudioManager;
 import android.os.AsyncResult;
 import android.os.Message;
 import android.os.Parcel;
@@ -42,19 +41,15 @@ import com.android.internal.telephony.uicc.IccCardStatus;
  */
 public class SamsungMSM8226DSRIL extends RIL {
 
-    private AudioManager mAudioManager;
-
     public SamsungMSM8226DSRIL(Context context, int preferredNetworkType,
             int cdmaSubscription, Integer instanceId) {
         super(context, preferredNetworkType, cdmaSubscription, instanceId);
-        mAudioManager = (AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
         mQANElements = 6;
     }
 
    public SamsungMSM8226DSRIL(Context context, int networkMode,
             int cdmaSubscription) {
         super(context, networkMode, cdmaSubscription);
-        mAudioManager = (AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
         mQANElements = 6;
    }
 
@@ -262,10 +257,6 @@ public class SamsungMSM8226DSRIL extends RIL {
             case 1036:
                 ret = responseVoid(p);
                 break;
-            case 11017: // RIL_UNSOL_WB_AMR_STATE:
-                ret = responseInts(p);
-                setWbAmr(((int[])ret)[0]);
-                break;
             default:
                 // Rewind the Parcel
                 p.setDataPosition(dataPosition);
@@ -348,21 +339,6 @@ public class SamsungMSM8226DSRIL extends RIL {
             response[3] = "2";
         }
         return response;
-    }
-
-    /**
-     * Set audio parameter "wb_amr" for HD-Voice (Wideband AMR).
-     *
-     * @param state: 0 = unsupported, 1 = supported.
-     */
-    private void setWbAmr(int state) {
-        if (state == 1) {
-            Rlog.d(RILJ_LOG_TAG, "setWbAmr(): setting audio parameter - wb_amr=on");
-            mAudioManager.setParameters("wide_voice_enable=true");
-        }else if (state == 0) {
-            Rlog.d(RILJ_LOG_TAG, "setWbAmr(): setting audio parameter - wb_amr=off");
-            mAudioManager.setParameters("wide_voice_enable=false");
-        }
     }
 
     @Override
