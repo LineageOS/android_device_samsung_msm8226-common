@@ -41,10 +41,14 @@ import com.android.internal.telephony.uicc.IccCardStatus;
  */
 public class SamsungMSM8226DSRIL extends RIL {
 
+    private static final int RIL_UNSOL_VOICE_SYSTEM_ID = 11032;
+
     public SamsungMSM8226DSRIL(Context context, int preferredNetworkType,
             int cdmaSubscription, Integer instanceId) {
         super(context, preferredNetworkType, cdmaSubscription, instanceId);
         mQANElements = 6;
+	SystemProperties.set("gsm.current.vsid", "0"); //default config
+	SystemProperties.set("gsm.current.vsid2", "1");
     }
 
    public SamsungMSM8226DSRIL(Context context, int networkMode,
@@ -253,6 +257,16 @@ public class SamsungMSM8226DSRIL extends RIL {
                 break;
             case 11021: // RIL_UNSOL_RESPONSE_HANDOVER:
                 ret = responseVoid(p);
+                break;
+            case 11032:
+                ret = responseInts(p);
+                if(ret == 0) { //this is not sure, maybe you need judge "mInstanceId"(this is the id of sim card)
+			SystemProperties.set("gsm.current.vsid", "0");
+			SystemProperties.set("gsm.current.vsid2", "1");
+                } else {
+			SystemProperties.set("gsm.current.vsid", "1");
+			SystemProperties.set("gsm.current.vsid2", "0");
+                }
                 break;
             case 1036:
                 ret = responseVoid(p);
