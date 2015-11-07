@@ -5,6 +5,9 @@
 /data/cam_socket.*                                            u:object_r:camera_socket:s0
 /sys/devices/virtual/camera(/.*)?                             u:object_r:sysfs_camera:s0
 
+# Charger
+/dev/keychord                                                 u:object_r:healthd:s0
+
 # CMHW
 /sys/devices/virtual/timed_output/vibrator(/.*)?              u:object_r:sysfs_vibeamp:s0
 /sys/class/sec/sec_touchkey/keypad_enable                     u:object_r:sysfs_display:s0
