@@ -19,22 +19,17 @@ package com.android.internal.telephony;
 import static com.android.internal.telephony.RILConstants.*;
 
 import android.content.Context;
-import android.media.AudioManager;
+import android.telephony.Rlog;
 import android.os.AsyncResult;
 import android.os.Message;
 import android.os.Parcel;
 import android.os.SystemProperties;
-import android.telephony.Rlog;
-
-import android.telephony.SignalStrength;
 import android.telephony.PhoneNumberUtils;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-
+import android.telephony.SignalStrength;
 import com.android.internal.telephony.uicc.IccCardApplicationStatus;
 import com.android.internal.telephony.uicc.IccCardStatus;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Qualcomm RIL for Samsung MSM8226 Single-sim devices
@@ -42,20 +37,52 @@ import com.android.internal.telephony.uicc.IccCardStatus;
  */
 public class SamsungMSM8226RIL extends RIL {
 
-    private AudioManager mAudioManager;
+    private static final int RIL_REQUEST_DIAL_EMERGENCY = 10016;
+    private static final int RIL_REQUEST_DIAL_EMERGENCY_LL = 10001;
+    private static final int RIL_UNSOL_ON_SS_LL = 11055;
+    private static final String RIL_VERSION_PROPERTY = "ro.sec_ril.version";
+
+    private boolean isLollipopRadio = SystemProperties.getInt(RIL_VERSION_PROPERTY, 44) == 51;
+
+    public SamsungMSM8226RIL(Context context, int networkMode, int cdmaSubscription) {
+        super(context, networkMode, cdmaSubscription, null);
+        mQANElements = 6;
+    }
 
     public SamsungMSM8226RIL(Context context, int preferredNetworkType,
             int cdmaSubscription, Integer instanceId) {
         super(context, preferredNetworkType, cdmaSubscription, instanceId);
-        mAudioManager = (AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
         mQANElements = 6;
     }
 
-    public SamsungMSM8226RIL(Context context, int networkMode,
-            int cdmaSubscription) {
-        super(context, networkMode, cdmaSubscription);
-        mAudioManager = (AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
-        mQANElements = 6;
+    @Override
+    public void
+    dial(String address, int clirMode, UUSInfo uusInfo, Message result) {
+        if (PhoneNumberUtils.isEmergencyNumber(address)) {
+            dialEmergencyCall(address, clirMode, result);
+            return;
+        }
+
+        RILRequest rr = RILRequest.obtain(RIL_REQUEST_DIAL, result);
+
+        rr.mParcel.writeString(address);
+        rr.mParcel.writeInt(clirMode);
+        rr.mParcel.writeInt(0);     // CallDetails.call_type
+        rr.mParcel.writeInt(1);     // CallDetails.call_domain
+        rr.mParcel.writeString(""); // CallDetails.getCsvFromExtras
+
+        if (uusInfo == null) {
+            rr.mParcel.writeInt(0); // UUS information is absent
+        } else {
+            rr.mParcel.writeInt(1); // UUS information is present
+            rr.mParcel.writeInt(uusInfo.getType());
+            rr.mParcel.writeInt(uusInfo.getDcs());
+            rr.mParcel.writeByteArray(uusInfo.getUserData());
+        }
+
+        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
+
+        send(rr);
     }
 
     @Override
@@ -88,35 +115,15 @@ public class SamsungMSM8226RIL extends RIL {
             appStatus.pin1_replaced  = p.readInt();
             appStatus.pin1           = appStatus.PinStateFromRILInt(p.readInt());
             appStatus.pin2           = appStatus.PinStateFromRILInt(p.readInt());
-            p.readInt(); // remaining_count_pin1 - pin1_num_retries
-            p.readInt(); // remaining_count_puk1 - puk1_num_retries
-            p.readInt(); // remaining_count_pin2 - pin2_num_retries
-            p.readInt(); // remaining_count_puk2 - puk2_num_retries
-            p.readInt(); // - perso_unblock_retries
+            p.readInt(); // pin1_num_retries
+            p.readInt(); // puk1_num_retries
+            p.readInt(); // pin2_num_retries
+            p.readInt(); // puk2_num_retries
+            p.readInt(); // perso_unblock_retries
+
             cardStatus.mApplications[i] = appStatus;
         }
         return cardStatus;
-    }
-
-    @Override
-    protected Object responseSignalStrength(Parcel p) {
-        int numInts = 12;
-        int response[];
-
-        // Get raw data
-        response = new int[numInts];
-        for (int i = 0; i < numInts; i++) {
-            response[i] = p.readInt();
-        }
-        //gsm
-        response[0] &= 0xff;
-        //cdma
-        response[2] %= 256;
-        response[4] %= 256;
-        response[7] &= 0xff;
-
-        return new SignalStrength(response[0], response[1], response[2], response[3], response[4], response[5], response[6], response[7], response[8], response[9], response[10], response[11], true);
-
     }
 
     @Override
@@ -146,16 +153,22 @@ public class SamsungMSM8226RIL extends RIL {
             dc.als = p.readInt();
             voiceSettings = p.readInt();
             dc.isVoice = (0 == voiceSettings) ? false : true;
-            p.readInt(); // is video
-            p.readInt(); // samsung call detail
-            p.readInt(); // samsung call detail
-            p.readString(); // samsung call detail
+            boolean isVideo;
+            if (!isLollipopRadio)
+                isVideo = (0 != p.readInt());       // Samsung CallDetails
+            int call_type = p.readInt();            // Samsung CallDetails
+            int call_domain = p.readInt();          // Samsung CallDetails
+            String csv = p.readString();            // Samsung CallDetails
             dc.isVoicePrivacy = (0 != p.readInt());
             dc.number = p.readString();
             int np = p.readInt();
             dc.numberPresentation = DriverCall.presentationFromCLIP(np);
             dc.name = p.readString();
-            dc.namePresentation = p.readInt();
+            if (!isLollipopRadio) {
+                dc.namePresentation = p.readInt();
+            } else {
+                dc.namePresentation = DriverCall.presentationFromCLIP(p.readInt());
+            }
             int uusInfoPresent = p.readInt();
             if (uusInfoPresent == 1) {
                 dc.uusInfo = new UUSInfo();
@@ -199,49 +212,109 @@ public class SamsungMSM8226RIL extends RIL {
         }
 
         return response;
+    }
 
+    @Override
+    protected Object
+    responseSignalStrength(Parcel p) {
+        int gsmSignalStrength = p.readInt() & 0xff;
+        int gsmBitErrorRate = p.readInt();
+        int cdmaDbm = p.readInt();
+        int cdmaEcio = p.readInt();
+        int evdoDbm = p.readInt();
+        int evdoEcio = p.readInt();
+        int evdoSnr = p.readInt();
+        int lteSignalStrength = p.readInt();
+        int lteRsrp = p.readInt();
+        int lteRsrq = p.readInt();
+        int lteRssnr = p.readInt();
+        int lteCqi = p.readInt();
+        int tdScdmaRscp = p.readInt();
+        // constructor sets default true, makeSignalStrengthFromRilParcel does not set it
+  	boolean isGsm = true;
+
+        if ((lteSignalStrength & 0xff) == 255 || lteSignalStrength == 99) {
+            lteSignalStrength = 99;
+            lteRsrp = SignalStrength.INVALID;
+            lteRsrq = SignalStrength.INVALID;
+            lteRssnr = SignalStrength.INVALID;
+            lteCqi = SignalStrength.INVALID;
+        } else {
+            lteSignalStrength &= 0xff;
+        }
+
+        if (RILJ_LOGD)
+            riljLog("gsmSignalStrength:" + gsmSignalStrength + " gsmBitErrorRate:" + gsmBitErrorRate +
+                    " cdmaDbm:" + cdmaDbm + " cdmaEcio:" + cdmaEcio + " evdoDbm:" + evdoDbm +
+                    " evdoEcio: " + evdoEcio + " evdoSnr:" + evdoSnr +
+                    " lteSignalStrength:" + lteSignalStrength + " lteRsrp:" + lteRsrp +
+                    " lteRsrq:" + lteRsrq + " lteRssnr:" + lteRssnr + " lteCqi:" + lteCqi +
+                    " tdScdmaRscp:" + tdScdmaRscp + " isGsm:" + (isGsm ? "true" : "false"));
+
+        return new SignalStrength(gsmSignalStrength, gsmBitErrorRate, cdmaDbm, cdmaEcio, evdoDbm,
+                evdoEcio, evdoSnr, lteSignalStrength, lteRsrp, lteRsrq, lteRssnr, lteCqi,
+                tdScdmaRscp, isGsm);
     }
 
     @Override
     protected void
     processUnsolicited (Parcel p) {
         Object ret;
-        int dataPosition = p.dataPosition(); // save off position within the Parcel
+        int dataPosition = p.dataPosition();
         int response = p.readInt();
+        int newResponse = response;
 
-        switch(response) {
-            // SAMSUNG STATES
-            case 11010: // RIL_UNSOL_AM:
-                ret = responseString(p);
-                String amString = (String) ret;
-                Rlog.d(RILJ_LOG_TAG, "Executing AM: " + amString);
-
-                try {
-                    Runtime.getRuntime().exec("am " + amString);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Rlog.e(RILJ_LOG_TAG, "am " + amString + " could not be executed.");
-                }
-                break;
-            case 11021: // RIL_UNSOL_RESPONSE_HANDOVER:
-                ret = responseVoid(p);
-                break;
-            case 1036:
-                ret = responseVoid(p);
-                break;
-            case 11017: // RIL_UNSOL_WB_AMR_STATE:
-                ret = responseInts(p);
-                setWbAmr(((int[])ret)[0]);
-                break;
-            default:
-                // Rewind the Parcel
+        if (isLollipopRadio) {
+            switch(response) {
+                case RIL_UNSOL_ON_SS_LL:
+                    newResponse = RIL_UNSOL_ON_SS;
+                    break;
+            }
+            if (newResponse != response) {
                 p.setDataPosition(dataPosition);
+                p.writeInt(newResponse);
+            }
+        }
+        p.setDataPosition(dataPosition);
+        super.processUnsolicited(p);
+    }
 
-                // Forward responses that we are not overriding to the super class
-                super.processUnsolicited(p);
-                return;
+    @Override
+    public void
+    acceptCall (Message result) {
+        RILRequest rr
+                = RILRequest.obtain(RIL_REQUEST_ANSWER, result);
+
+        if (isLollipopRadio) {
+            rr.mParcel.writeInt(1);
+            rr.mParcel.writeInt(0);
         }
 
+        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
+
+        send(rr);
+    }
+
+
+    private void
+    dialEmergencyCall(String address, int clirMode, Message result) {
+        RILRequest rr;
+
+        if (isLollipopRadio) {
+            rr = RILRequest.obtain(RIL_REQUEST_DIAL_EMERGENCY_LL, result);
+        } else {
+            rr = RILRequest.obtain(RIL_REQUEST_DIAL_EMERGENCY, result);
+        }
+        rr.mParcel.writeString(address);
+        rr.mParcel.writeInt(clirMode);
+        rr.mParcel.writeInt(0);        // CallDetails.call_type
+        rr.mParcel.writeInt(3);        // CallDetails.call_domain
+        rr.mParcel.writeString("");    // CallDetails.getCsvFromExtra
+        rr.mParcel.writeInt(0);        // Unknown
+
+        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
+
+        send(rr);
     }
 
     @Override
@@ -304,7 +377,7 @@ public class SamsungMSM8226RIL extends RIL {
 
     private Object
     responseDataRegistrationState(Parcel p) {
-        String response[] = (String[])responseStrings(p); // all data from parcell get popped
+        String response[] = (String[])responseStrings(p);
         /* DANGER WILL ROBINSON
          * In some cases from Vodaphone we are receiving a RAT of 102
          * while in tunnels of the metro. Lets Assume that if we
@@ -315,69 +388,5 @@ public class SamsungMSM8226RIL extends RIL {
             response[3] = "2";
         }
         return response;
-    }
-
-    /**
-     * Set audio parameter "wb_amr" for HD-Voice (Wideband AMR).
-     *
-     * @param state: 0 = unsupported, 1 = supported.
-     */
-    private void setWbAmr(int state) {
-        if (state == 1) {
-            Rlog.d(RILJ_LOG_TAG, "setWbAmr(): setting audio parameter - wb_amr=on");
-            mAudioManager.setParameters("wide_voice_enable=true");
-        }else if (state == 0) {
-            Rlog.d(RILJ_LOG_TAG, "setWbAmr(): setting audio parameter - wb_amr=off");
-            mAudioManager.setParameters("wide_voice_enable=false");
-        }
-    }
-
-    @Override
-    public void
-    dial(String address, int clirMode, UUSInfo uusInfo, Message result) {
-        if (PhoneNumberUtils.isEmergencyNumber(address)) {
-            dialEmergencyCall(address, clirMode, result);
-            return;
-        }
-        RILRequest rr = RILRequest.obtain(RIL_REQUEST_DIAL, result);
-
-        rr.mParcel.writeString(address);
-        rr.mParcel.writeInt(clirMode);
-        rr.mParcel.writeInt(0);
-        rr.mParcel.writeInt(1);
-        rr.mParcel.writeString("");
-
-        if (uusInfo == null) {
-            rr.mParcel.writeInt(0); // UUS information is absent
-        } else {
-            rr.mParcel.writeInt(1); // UUS information is present
-            rr.mParcel.writeInt(uusInfo.getType());
-            rr.mParcel.writeInt(uusInfo.getDcs());
-            rr.mParcel.writeByteArray(uusInfo.getUserData());
-        }
-
-        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
-
-        send(rr);
-    }
-
-    static final int RIL_REQUEST_DIAL_EMERGENCY = 10016;
-
-    private void
-    dialEmergencyCall(String address, int clirMode, Message result) {
-        RILRequest rr;
-        Rlog.v(RILJ_LOG_TAG, "Emergency dial: " + address);
-
-        rr = RILRequest.obtain(RIL_REQUEST_DIAL_EMERGENCY, result);
-        rr.mParcel.writeString(address + "/");
-        rr.mParcel.writeInt(clirMode);
-        rr.mParcel.writeInt(0);        // CallDetails.call_type
-        rr.mParcel.writeInt(3);        // CallDetails.call_domain
-        rr.mParcel.writeString("");    // CallDetails.getCsvFromExtra
-        rr.mParcel.writeInt(0);        // Unknown
-
-        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
-
-        send(rr);
     }
 }
