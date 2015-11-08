@@ -26,9 +26,7 @@ import android.os.Parcel;
 import android.os.SystemProperties;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SignalStrength;
-import com.android.internal.telephony.cdma.CdmaInformationRecords;
-import com.android.internal.telephony.cdma.CdmaInformationRecords.CdmaSignalInfoRec;
-import com.android.internal.telephony.cdma.SignalToneUtil;
+
 import com.android.internal.telephony.uicc.IccCardApplicationStatus;
 import com.android.internal.telephony.uicc.IccCardStatus;
 import java.util.ArrayList;
@@ -88,7 +86,7 @@ public class SamsungMSM8226DSRIL extends RIL {
     @Override
     protected Object
     responseIccCardStatus(Parcel p) {
-        IccCardApplicationStatus appStatus = null;
+        IccCardApplicationStatus appStatus;
 
         IccCardStatus cardStatus = new IccCardStatus();
         cardStatus.setCardState(p.readInt());
@@ -248,25 +246,6 @@ public class SamsungMSM8226DSRIL extends RIL {
         return new SignalStrength(gsmSignalStrength, gsmBitErrorRate, cdmaDbm, cdmaEcio, evdoDbm,
                 evdoEcio, evdoSnr, lteSignalStrength, lteRsrp, lteRsrq, lteRssnr, lteCqi,
                 tdScdmaRscp, mIsGsm);
-    }
-
-    @Override
-    protected void notifyRegistrantsCdmaInfoRec(CdmaInformationRecords infoRec) {
-        final int response = RIL_UNSOL_CDMA_INFO_REC;
-
-        if (infoRec.record instanceof CdmaSignalInfoRec) {
-            CdmaSignalInfoRec rec = (CdmaSignalInfoRec) infoRec.record;
-            if (rec != null
-                    && rec.isPresent
-                    && rec.signalType == SignalToneUtil.IS95_CONST_IR_SIGNAL_IS54B
-                    && rec.alertPitch == SignalToneUtil.IS95_CONST_IR_ALERT_MED
-                    && rec.signal == SignalToneUtil.IS95_CONST_IR_SIG_IS54B_L) {
-                /* Drop record, otherwise IS95_CONST_IR_SIG_IS54B_L tone will
-                 * continue to play after the call is connected */
-                return;
-            }
-        }
-        super.notifyRegistrantsCdmaInfoRec(infoRec);
     }
 
     @Override
