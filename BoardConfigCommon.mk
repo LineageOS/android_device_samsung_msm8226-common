@@ -80,6 +80,9 @@ TARGET_GPS_HAL_PATH := device/samsung/msm8226-common/gps
 # Init
 TARGET_INIT_VENDOR_LIB := libinit_msm
 
+# Keymaster
+TARGET_KEYMASTER_WAIT_FOR_QSEE := true
+
 # Memory
 MALLOC_IMPL := dlmalloc
 
