@@ -37,12 +37,8 @@ import java.util.Collections;
  */
 public class SamsungMSM8226RIL extends RIL {
 
-    private static final int RIL_REQUEST_DIAL_EMERGENCY = 10016;
-    private static final int RIL_REQUEST_DIAL_EMERGENCY_LL = 10001;
+    private static final int RIL_REQUEST_DIAL_EMERGENCY = 10001;
     private static final int RIL_UNSOL_ON_SS_LL = 11055;
-    private static final String RIL_VERSION_PROPERTY = "ro.sec_ril.version";
-
-    private boolean isLollipopRadio = SystemProperties.getInt(RIL_VERSION_PROPERTY, 44) == 51;
 
     public SamsungMSM8226RIL(Context context, int networkMode, int cdmaSubscription) {
         super(context, networkMode, cdmaSubscription, null);
@@ -154,8 +150,6 @@ public class SamsungMSM8226RIL extends RIL {
             voiceSettings = p.readInt();
             dc.isVoice = (0 == voiceSettings) ? false : true;
             boolean isVideo;
-            if (!isLollipopRadio)
-                isVideo = (0 != p.readInt());       // Samsung CallDetails
             int call_type = p.readInt();            // Samsung CallDetails
             int call_domain = p.readInt();          // Samsung CallDetails
             String csv = p.readString();            // Samsung CallDetails
@@ -164,11 +158,7 @@ public class SamsungMSM8226RIL extends RIL {
             int np = p.readInt();
             dc.numberPresentation = DriverCall.presentationFromCLIP(np);
             dc.name = p.readString();
-            if (!isLollipopRadio) {
-                dc.namePresentation = p.readInt();
-            } else {
-                dc.namePresentation = DriverCall.presentationFromCLIP(p.readInt());
-            }
+            dc.namePresentation = DriverCall.presentationFromCLIP(p.readInt());
             int uusInfoPresent = p.readInt();
             if (uusInfoPresent == 1) {
                 dc.uusInfo = new UUSInfo();
@@ -264,16 +254,14 @@ public class SamsungMSM8226RIL extends RIL {
         int response = p.readInt();
         int newResponse = response;
 
-        if (isLollipopRadio) {
-            switch(response) {
-                case RIL_UNSOL_ON_SS_LL:
-                    newResponse = RIL_UNSOL_ON_SS;
-                    break;
-            }
-            if (newResponse != response) {
-                p.setDataPosition(dataPosition);
-                p.writeInt(newResponse);
-            }
+        switch(response) {
+            case RIL_UNSOL_ON_SS_LL:
+                newResponse = RIL_UNSOL_ON_SS;
+                break;
+        }
+        if (newResponse != response) {
+            p.setDataPosition(dataPosition);
+            p.writeInt(newResponse);
         }
         p.setDataPosition(dataPosition);
         super.processUnsolicited(p);
@@ -285,10 +273,8 @@ public class SamsungMSM8226RIL extends RIL {
         RILRequest rr
                 = RILRequest.obtain(RIL_REQUEST_ANSWER, result);
 
-        if (isLollipopRadio) {
-            rr.mParcel.writeInt(1);
-            rr.mParcel.writeInt(0);
-        }
+        rr.mParcel.writeInt(1);
+        rr.mParcel.writeInt(0);
 
         if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
 
@@ -300,11 +286,7 @@ public class SamsungMSM8226RIL extends RIL {
     dialEmergencyCall(String address, int clirMode, Message result) {
         RILRequest rr;
 
-        if (isLollipopRadio) {
-            rr = RILRequest.obtain(RIL_REQUEST_DIAL_EMERGENCY_LL, result);
-        } else {
-            rr = RILRequest.obtain(RIL_REQUEST_DIAL_EMERGENCY, result);
-        }
+        rr = RILRequest.obtain(RIL_REQUEST_DIAL_EMERGENCY, result);
         rr.mParcel.writeString(address);
         rr.mParcel.writeInt(clirMode);
         rr.mParcel.writeInt(0);        // CallDetails.call_type
