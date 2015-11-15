@@ -166,9 +166,6 @@ PRODUCT_PACKAGES += \
     libril_shim
 
 # USB
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp
-
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
 
