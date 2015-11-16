@@ -158,11 +158,7 @@ public class SamsungMSM8226RIL extends RIL {
             int np = p.readInt();
             dc.numberPresentation = DriverCall.presentationFromCLIP(np);
             dc.name = p.readString();
-            if (!isLollipopRadio) {
-                dc.namePresentation = p.readInt();
-            } else {
-                dc.namePresentation = DriverCall.presentationFromCLIP(p.readInt());
-            }
+            dc.namePresentation = DriverCall.presentationFromCLIP(p.readInt());
             int uusInfoPresent = p.readInt();
             if (uusInfoPresent == 1) {
                 dc.uusInfo = new UUSInfo();
