@@ -739,7 +739,7 @@ service irsc_util /system/bin/irsc_util "/etc/sec_config"
 service mpdecision /system/bin/mpdecision --avg_comp
     class main
     user root
-    disabled
+    group system
 
 service qcamerasvr /system/bin/mm-qcamera-daemon
     class late_start
