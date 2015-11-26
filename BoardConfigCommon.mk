@@ -15,9 +15,9 @@
 # Inherit from qcom-common
 -include device/samsung/qcom-common/BoardConfigCommon.mk
 
-LOCAL_PATH := device/samsung/msm8226-common
+VENDOR_PATH := device/samsung/msm8226-common
 
-TARGET_SPECIFIC_HEADER_PATH := device/samsung/msm8226-common/include
+TARGET_SPECIFIC_HEADER_PATH := $(VENDOR_PATH)/include
 
 # Architecture
 TARGET_CPU_MEMCPY_BASE_OPT_DISABLE := true
@@ -48,10 +48,10 @@ BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_CHARGER_SHOW_PERCENTAGE := true
 
 # CMHW
-BOARD_HARDWARE_CLASS += device/samsung/msm8226-common/cmhw
+BOARD_HARDWARE_CLASS += $(VENDOR_PATH)/cmhw
 
 # Custom RIL class
-BOARD_RIL_CLASS := ../../../device/samsung/msm8226-common/ril/
+BOARD_RIL_CLASS := ../../../$(VENDOR_PATH)/ril/
 
 # Display
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
@@ -75,7 +75,7 @@ TARGET_QCOM_NO_FM_FIRMWARE := true
 EXTENDED_FONT_FOOTPRINT := true
 
 #GPS
-TARGET_GPS_HAL_PATH := device/samsung/msm8226-common/gps
+TARGET_GPS_HAL_PATH := $(VENDOR_PATH)/gps
 
 # Init
 TARGET_INIT_VENDOR_LIB := libinit_msm
@@ -93,12 +93,12 @@ TARGET_BOARD_PLATFORM := msm8226
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno305
 
 # Power
-TARGET_POWERHAL_SET_INTERACTIVE_EXT := $(LOCAL_PATH)/power/power_ext.c
+TARGET_POWERHAL_SET_INTERACTIVE_EXT := $(VENDOR_PATH)/power/power_ext.c
 TARGET_POWERHAL_VARIANT := qcom
 
 # SELinux
 -include device/qcom/sepolicy/sepolicy.mk
-BOARD_SEPOLICY_DIRS += device/samsung/msm8226-common/sepolicy
+BOARD_SEPOLICY_DIRS += $(VENDOR_PATH)/sepolicy
 
 # Wifi
 BOARD_HAS_QCOM_WLAN              := true
