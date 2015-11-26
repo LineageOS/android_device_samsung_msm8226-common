@@ -165,6 +165,17 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libril_shim
 
+# Ramdisk
+PRODUCT_PACKAGES += \
+    init.crda.sh \
+    init.qcom.bt.sh
+
+PRODUCT_PACKAGES += \
+    init.qcom.power.rc \
+    init.qcom.rc \
+    init.qcom.usb.rc \
+    ueventd.qcom.rc
+
 # USB
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
