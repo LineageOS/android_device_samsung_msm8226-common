@@ -176,10 +176,6 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.rc \
     ueventd.qcom.rc
 
-# USB
-PRODUCT_PACKAGES += \
-    com.android.future.usb.accessory
-
 # Wifi
 PRODUCT_PACKAGES += \
     dhcpcd.conf \
