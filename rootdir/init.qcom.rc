@@ -44,12 +44,20 @@ on early-init
     symlink /data/tombstones /tombstones
 
 on init
+    export LD_PRELOAD "/system/lib/libboringssl-compat.so"
+
     # Support legacy paths
     symlink /sdcard /mnt/sdcard
     symlink /sdcard /storage/sdcard0
 
 on fs
     mount_all fstab.qcom
+
+    # Support Preload install apks
+    # mkdir /preload 0771 system system
+    # wait /dev/block/platform/msm_sdcc.1/by-name/hidden
+    # mount ext4 /dev/block/platform/msm_sdcc.1/by-name/hidden /preload nosuid nodev ro barrier=1
+    # setprop storage.preload.complete 1
 
     restorecon_recursive /efs
     restorecon_recursive /persist
@@ -65,16 +73,6 @@ on fs
     write /dev/wcnss_wlan 1
 
 on post-fs-data
-    # Create the directory used by bluetooth
-    mkdir /data/misc/bluetooth 0770 bluetooth bluetooth
-
-    # Create the directories used by the Wireless subsystem
-    mkdir /data/misc/wifi 0770 wifi wifi
-    mkdir /data/misc/wifi/sockets 0770 wifi wifi
-    mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
-    mkdir /data/misc/dhcp 0775 dhcp dhcp
-    chown dhcp dhcp /data/misc/dhcp
-
     # Create the directories used by CnE subsystem
     mkdir /data/connectivity 0771 system system
     chown system system /data/connectivity
@@ -129,15 +127,6 @@ on post-fs-data
     chown system system /sys/devices/platform/msm_sdcc.3/polling
     chown system system /sys/devices/platform/msm_sdcc.4/polling
 
-    # Create the symlink to qcn wpa_supplicant folder for ar6000 wpa_supplicant
-    mkdir /data/system 0775 system system
-
-    # Create directories for gpsone_daemon services
-    mkdir /data/misc/gpsone_d 0770 system gps
-
-    # Create directories for QuIPS
-    mkdir /data/misc/quipc 0770 system gps
-
     # Create directories for Location services
     mkdir /data/misc/location 0770 gps gps
     mkdir /data/misc/location/gpsone_d 0770 system gps
@@ -152,9 +141,6 @@ on post-fs-data
     # Create directory for FOTA
     mkdir /data/fota 0771
     chown system system /data/fota
-
-    # Create directory for hostapd
-    mkdir /data/hostapd 0771 system wifi
 
     # Create /data/time folder for time-services
     mkdir /data/time/ 0700 system system
@@ -214,14 +200,6 @@ on post-fs-data
     chmod 0644 /dev/icdr
     chown system system /dev/tzic
 
-    # Permissions for svc led
-    chown system system /sys/class/sec/led/led_r
-    chown system system /sys/class/sec/led/led_g
-    chown system system /sys/class/sec/led/led_b
-    chown system system /sys/class/sec/led/led_pattern
-    chown system system /sys/class/sec/led/led_blink
-    chown system system /sys/class/sec/led/led_lowpower
-
     # Symlink to bugreport storage location
     symlink /data/data/com.android.shell/files/bugreports /data/bugreports
 
@@ -243,42 +221,10 @@ on boot
     chown bluetooth net_bt_stack ro.bt.bdaddr_path
     chown radio net_bt_stack /efs/bluetooth/bt_addr
     chmod 0755 /efs/bluetooth/bt_addr
-    chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
-    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
-    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
-    chown bluetooth bluetooth /proc/bluetooth/sleep/proto
-    chown bluetooth bluetooth /sys/module/hci_uart/parameters/ath_lpm
-    chown bluetooth bluetooth /sys/module/hci_uart/parameters/ath_btwrite
-    chown system system /sys/module/sco/parameters/disable_esco
-    chown bluetooth bluetooth /sys/module/hci_smd/parameters/hcismd_set
-    chmod 0660 /sys/module/bluetooth_power/parameters/power
-    chmod 0660 /sys/class/rfkill/rfkill0/state
-    chmod 0660 /sys/module/hci_smd/parameters/hcismd_set
-    chmod 0660 /proc/bluetooth/sleep/proto
-    chmod 0660 /sys/module/hci_uart/parameters/ath_lpm
-    chmod 0660 /sys/module/hci_uart/parameters/ath_btwrite
-    chown bluetooth bluetooth /dev/ttyHS0
-    chown bluetooth bluetooth /dev/ttyHS2
-    chmod 0660 /dev/ttyHS0
-    chmod 0660 /dev/ttyHS2
-    chown bluetooth bluetooth /sys/devices/platform/msm_serial_hs.0/clock
-    chmod 0660 /sys/devices/platform/msm_serial_hs.0/clock
     restorecon_recursive /efs/bluetooth
 
     # IMEI
     mkdir /efs/imei 0775 radio radio
-    restorecon -R /efs
-
-    mkdir /efs/drm/playready 0775
-    chown drm system /efs/drm/playready
-    chmod 0775 /efs/drm/playready
-
-    # for BT MAC address
-    mkdir /efs/bluetooth 0775 radio system
-
-    # Audience ES705 UART
-    chmod 0660 /dev/ttyHS3
-    chown system system /dev/ttyHS3
 
     # Create QMUX deamon socket area
     mkdir /dev/socket/qmux_radio 0770 radio radio
@@ -296,8 +242,6 @@ on boot
 
     # Remove SUID bit for iproute2 ip tool
     chmod 0755 /system/bin/ip
-
-    chmod 0444 /sys/devices/platform/msm_hsusb/gadget/usb_state
 
     # For bridgemgr daemon to inform the USB driver of the correct transport
     chown radio radio /sys/class/android_usb/f_rmnet_smd_sdio/transport
@@ -331,10 +275,6 @@ on boot
     # connections on high-throughput links get dropped when
     # an ack packet comes out of order
     write /proc/sys/net/netfilter/nf_conntrack_tcp_be_liberal 1
-
-    # NFC local data and nfcee xml storage
-    mkdir /data/nfc 0770 nfc nfc
-    mkdir /data/nfc/param 0770 nfc nfc
 
     # Set the console loglevel to < KERN_INFO
     # Set the default message loglevel to KERN_INFO
@@ -424,8 +364,6 @@ on boot
     chown system system /sys/kernel/ipv4/tcp_rmem_def
     chown system system /sys/kernel/ipv4/tcp_rmem_max
 
-    chown root radio /proc/cmdline
-
     # Adjust YUV to RGB Conversion(CSC_Conversion)
     chown system media_rw /sys/class/graphics/fb0/csc_cfg
     chmod 0660 /sys/class/graphics/fb0/csc_cfg
@@ -433,10 +371,6 @@ on boot
     # Display color calibration
     chown system system /sys/devices/virtual/graphics/fb0/rgb
     chmod 0660 /sys/devices/virtual/graphics/fb0/rgb
-
-    # OTG Test
-    chown system radio /sys/class/host_notify/usb_otg/booster
-    chmod 0660 /sys/class/host_notify/usb_otg/booster
 
     # Essential node for usbservice
     mkdir /dev/bus/ 755 root root
@@ -457,129 +391,6 @@ on boot
     chown system radio /sys/class/camera/front/front_camfw
     chown system radio /sys/class/camera/front/front_camtype
 
-    # Accelerometer_sensor
-    chown system radio /sys/class/sensors/accelerometer_sensor/raw_data
-    chown system radio /sys/class/sensors/accelerometer_sensor/calibration
-    chown system radio /sys/class/sensors/accelerometer_sensor/reactive_alert
-    chown system radio /sys/class/sensors/accelerometer_sensor/vendor
-    chown system radio /sys/class/sensors/accelerometer_sensor/name
-    chown system input /sys/class/input/input3/data
-    chown system input /sys/class/input/input3/delay
-    chown system input /sys/class/input/input3/enable
-    chown system input /sys/class/input/input3/filter_enable
-    chown system input /sys/class/input/input3/modalias
-    chown system input /sys/class/input/input3/name
-    chown system input /sys/class/input/input3/offset
-    chown system input /sys/class/input/input3/phys
-    chown system input /sys/class/input/input3/position
-    chown system input /sys/class/input/input3/properties
-    chown system input /sys/class/input/input3/threshold
-    chown system input /sys/class/input/input5/data
-    chown system input /sys/class/input/input5/delay
-    chown system input /sys/class/input/input5/enable
-    chown system input /sys/class/input/input5/filter_enable
-    chown system input /sys/class/input/input5/modalias
-    chown system input /sys/class/input/input5/name
-    chown system input /sys/class/input/input5/offset
-    chown system input /sys/class/input/input5/phys
-    chown system input /sys/class/input/input5/position
-    chown system input /sys/class/input/input5/properties
-    chown system input /sys/class/input/input5/threshold
-
-    # Gyro_sensor
-    chown system radio /sys/class/sensors/gyro_sensor/power_on
-    chown system radio /sys/class/sensors/gyro_sensor/temperature
-    chown system radio /sys/class/sensors/gyro_sensor/selftest
-    chown system radio /sys/class/sensors/gyro_sensor/vendor
-    chown system radio /sys/class/sensors/gyro_sensor/name
-
-    # Light_sensor
-    chown system radio /sys/class/sensors/light_sensor/lux
-    chown system radio /sys/class/sensors/light_sensor/raw_data
-    chown system radio /sys/class/sensors/light_sensor/vendor
-    chown system radio /sys/class/sensors/light_sensor/name
-    chown system input /sys/class/input/input5/id
-    chown system input /sys/class/input/input5/poll_delay
-
-    # Magnetic_sensor
-    chown system radio /sys/class/sensors/magnetic_sensor/selftest
-    chown system radio /sys/class/sensors/magnetic_sensor/raw_data
-    chown system radio /sys/class/sensors/magnetic_sensor/vendor
-    chown system radio /sys/class/sensors/magnetic_sensor/name
-    chown system radio /sys/class/sensors/magnetic_sensor/adc
-    chown system radio /sys/class/sensors/magnetic_sensor/status
-    chown compass input /sys/class/input/input5/dynamic_matrix
-    chown compass input /sys/class/input/input5/offsets
-    chown compass input /sys/class/input/input7/dynamic_matrix
-    chown compass input /sys/class/input/input7/offsets
-    chown system input /sys/class/input/input2/name
-    chown system input /sys/class/input/input2/poll
-    chown system input /sys/class/input/input2/id
-    chown system input /sys/class/input/input4/name
-    chown system input /sys/class/input/input4/poll
-    chown system input /sys/class/input/input4/id
-    chown system input /sys/class/input/input4/data
-    chown system input /sys/class/input/input4/delay
-    chown system input /sys/class/input/input4/enable
-    chown system input /sys/class/input/input4/filter_enable
-    chown system input /sys/class/input/input4/filter_len
-    chown system input /sys/class/input/input4/filter_noise
-    chown system input /sys/class/input/input4/filter_threshold
-    chown system input /sys/class/input/input4/position
-    chown system input /sys/class/input/input5/name
-    chown system input /sys/class/input/input5/poll
-    chown system input /sys/class/input/input5/id
-    chown system input /sys/class/input/input5/distortion
-    chown system input /sys/class/input/input5/self_test
-    chown system input /sys/class/input/input5/threshold
-    chown system input /sys/class/input/input6/name
-    chown system input /sys/class/input/input6/poll
-    chown system input /sys/class/input/input6/id
-    chown system input /sys/class/input/input6/data
-    chown system input /sys/class/input/input6/delay
-    chown system input /sys/class/input/input6/enable
-    chown system input /sys/class/input/input6/filter_enable
-    chown system input /sys/class/input/input6/filter_len
-    chown system input /sys/class/input/input6/filter_noise
-    chown system input /sys/class/input/input6/filter_threshold
-    chown system input /sys/class/input/input6/position
-    chown system input /sys/class/input/input7/distortion
-    chown system input /sys/class/input/input7/self_test
-    chown system input /sys/class/input/input7/threshold
-    chown system input /dev/alps_io
-    chown system input /system/etc/param.dat
-    chown system input /system/etc/alp_cal.dat
-
-    # Proximity_sensor
-    chown system radio /sys/class/sensors/proximity_sensor/state
-    chown system radio /sys/class/sensors/proximity_sensor/prox_avg
-    chown system radio /sys/class/sensors/proximity_sensor/prox_cal
-    chown system radio /sys/class/sensors/proximity_sensor/prox_cal2
-    chown system radio /sys/class/sensors/proximity_sensor/prox_offset_pass
-    chown system radio /sys/class/sensors/proximity_sensor/prox_tresh
-    chown system radio /sys/class/sensors/proximity_sensor/raw_data
-    chown system radio /sys/class/sensors/proximity_sensor/vendor
-    chown system radio /sys/class/sensors/proximity_sensor/state
-    chown system radio /sys/class/sensors/proximity_sensor/name
-    chown system input /sys/class/input/input4/enable
-    chown system input /sys/class/input/input4/id
-
-    # MPU6050 sensor
-    chown system input /sys/class/input/input3/acc_enable
-    chown system input /sys/class/input/input3/acc_delay
-    chown system input /sys/class/input/input3/gyro_enable
-    chown system input /sys/class/input/input3/gyro_delay
-    chown system input /sys/class/input/input3/self_test
-
-    # Sensors
-    chown system system /efs/FactoryApp/baro_delta
-    chmod 0640 /efs/FactoryApp/baro_delta
-    restorecon /efs/FactoryApp/baro_delta
-
-    chown system system /efs/gyro_cal_data
-    chmod 0640 /efs/gyro_cal_data
-    restorecon /efs/gyro_cal_data
-
     # Torch
     chown system system /sys/class/leds/led:flash_torch/brightness
     chmod 0666 /sys/class/leds/led:flash_torch/brightness
@@ -591,12 +402,6 @@ on boot
     chown radio system /sys/devices/platform/sec-thermistor/temperature
     chown radio system /sys/class/power_supply/battery/siop_level
     chown radio system /sys/class/power_supply/battery/test_charge_current
-
-    # NFC_NXP
-    setprop ro.nfc.port "I2C"
-    chmod 0660 /dev/pn547
-    chown nfc nfc /dev/pn547
-    symlink /dev/pn547 /dev/pn544
 
     # Permissions for Charging
     chown system radio /sys/class/power_supply/battery/batt_reset_soc
@@ -649,8 +454,6 @@ on boot
     chmod 0664 /sys/class/input/input0/enabled
     chmod 0664 /sys/class/input/input1/enabled
     chmod 0664 /sys/class/input/input2/enabled
-    chown system system /sys/class/sec/sec_touchkey/brightness
-    chmod 0664 /sys/class/sec/sec_touchkey/brightness
 
     # Permission for touchkey
     chown system system /sys/class/sec/sec_touchkey/keypad_enable
@@ -689,8 +492,7 @@ on charger
     mount ext4 /dev/block/platform/msm_sdcc.1/by-name/system /system ro barrier=1
     class_start charger
 
-# Services begin here
-
+# Services
 service adsprpcd /system/bin/adsprpcd
     class main
     user media
@@ -701,13 +503,10 @@ service audiod /system/bin/audiod
     user system
     group system
 
-service config_bluetooth /system/bin/sh /system/etc/init.qcom.bt.sh "onboot"
-    class core
-    user root
-    oneshot
-
-on property:vold.decrypt=trigger_restart_framework
-    start config_bluetooth
+service charger /sbin/healthd -c
+    class charger
+    critical
+    seclabel u:r:healthd:s0
 
 service ds_fmc_appd /system/bin/ds_fmc_appd -p "rmnet0" -D
     class late_start
@@ -805,7 +604,7 @@ service p2p_supplicant /system/bin/wpa_supplicant \
     -I/system/etc/wifi/p2p_supplicant_overlay.conf -N \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
     -I/system/etc/wifi/wpa_supplicant_overlay.conf \
-    -O/data/misc/wifi/sockets -puse_p2p_group_interface=1 \
+    -puse_p2p_group_interface=1 \
     -e/data/misc/wifi/entropy.bin -g@android:wpa_wlan0
     #   we will start as root and wpa_supplicant will switch to user wifi
     #   after setting up the capabilities required for WEXT
@@ -819,7 +618,6 @@ service p2p_supplicant /system/bin/wpa_supplicant \
 service wpa_supplicant /system/bin/wpa_supplicant \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
     -I/system/etc/wifi/wpa_supplicant_overlay.conf \
-    -O/data/misc/wifi/sockets \
     -e/data/misc/wifi/entropy.bin -g@android:wpa_wlan0
     #   we will start as root and wpa_supplicant will switch to user wifi
     #   after setting up the capabilities required for WEXT
@@ -891,9 +689,16 @@ on property:crypto.driver.load=0
     exec /system/bin/rmmod qcedev.ko
     exec /system/bin/rmmod qce.ko
 
+# Dual-sim support
+on property:persist.radio.multisim.config=dsds
+    stop ril-daemon
+    start ril-daemon
+    start ril-daemon1
+
 service ril-daemon1 /system/bin/rild -l /system/lib/libsec-ril-dsds.so -c 2
     class main
     socket rild2 stream 660 root radio
     socket rild-debug2 stream 660 radio system
     user root
+    disabled
     group radio cache inet misc audio log qcom_diag system drmrpc sdcard_r sdcard_rw shell
