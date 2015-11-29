@@ -3,4 +3,5 @@ allow mediaserver shell_data_file:dir search;
 allow mediaserver socket_device:sock_file write;
 allow mediaserver sysfs_camera:dir search;
 allow mediaserver sysfs_camera:file { getattr open read };
+allow mediaserver system_file:file execmod;
 

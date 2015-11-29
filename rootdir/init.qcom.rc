@@ -577,7 +577,8 @@ on property:persist.sys.ssr.restart_level=3
     write /sys/module/subsystem_restart/parameters/restart_level 3
 
 service thermal-engine /system/bin/thermal-engine -c /etc/thermal-engine-8226.conf
-    class main
+    class core
+    seclabel u:r:thermal-engine:s0
     user root
     group root
 
