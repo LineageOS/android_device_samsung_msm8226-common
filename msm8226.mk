@@ -110,7 +110,6 @@ PRODUCT_PACKAGES += \
     libOmxQcelp13Enc \
     libOmxVdec \
     libOmxVenc \
-    libqcmediaplayer \
     libstagefrighthw
 
 # Permissions
