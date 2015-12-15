@@ -40,8 +40,8 @@ public class SamsungMSM8226RIL extends RIL {
     private static final int RIL_REQUEST_DIAL_EMERGENCY = 10001;
     private static final int RIL_UNSOL_ON_SS_LL = 11055;
 
-    public SamsungMSM8226RIL(Context context, int networkMode, int cdmaSubscription) {
-        super(context, networkMode, cdmaSubscription, null);
+    public SamsungMSM8226RIL(Context context, int preferredNetworkType, int cdmaSubscription) {
+        super(context, preferredNetworkType, cdmaSubscription, null);
         mQANElements = 6;
     }
 
