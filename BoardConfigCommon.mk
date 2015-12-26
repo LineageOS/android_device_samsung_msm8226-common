@@ -54,7 +54,7 @@ BOARD_HARDWARE_CLASS += \
     $(VENDOR_PATH)/cmhw
 
 # Custom RIL class
-BOARD_RIL_CLASS := ../../../$(VENDOR_PATH)/ril/
+BOARD_RIL_CLASS := ../../../$(VENDOR_PATH)/ril
 
 # Display
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
@@ -77,7 +77,7 @@ TARGET_QCOM_NO_FM_FIRMWARE := true
 # Fonts
 EXTENDED_FONT_FOOTPRINT := true
 
-#GPS
+# GPS
 TARGET_GPS_HAL_PATH := $(VENDOR_PATH)/gps
 
 # Init
