@@ -42,6 +42,7 @@ ro.vendor.extension_library=/vendor/lib/libqc-opt.so
 
 # Radio
 persist.data.netmgrd.qos.enable=false
+persist.data.qmi.adb_logmask=0
 persist.radio.add_power_save=1
 rild.libargs=-d /dev/smd0
 rild.libpath=/system/lib/libsec-ril.so
