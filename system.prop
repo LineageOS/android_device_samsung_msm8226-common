@@ -61,4 +61,5 @@ ro.qc.sdk.sensors.gestures=true
 persist.timed.enable=true
 
 # Wi-Fi
+ro.disableWifiApFirmwareReload=true
 wifi.interface=wlan0
