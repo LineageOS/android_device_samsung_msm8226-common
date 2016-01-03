@@ -59,8 +59,8 @@ on fs
     # mount ext4 /dev/block/platform/msm_sdcc.1/by-name/hidden /preload nosuid nodev ro barrier=1
     # setprop storage.preload.complete 1
 
-    restorecon_recursive /efs
-    restorecon_recursive /persist
+    #restorecon_recursive /efs
+    #restorecon_recursive /persist
 
     mkdir /persist/data 0700 system system
     mkdir /persist/data/sfs 0700 system system
@@ -100,7 +100,7 @@ on post-fs-data
     mkdir /efs/wifi 0775 radio system
     chown system wifi /efs/wifi/.mac.info
     chmod 0660 /efs/wifi/.mac.info
-    restorecon /efs/wifi/.mac.info
+    #restorecon /efs/wifi/.mac.info
     chmod 0660 /efs/wifi/.mac.cob
 
     # Create directory used by audio subsystem
@@ -171,9 +171,9 @@ on post-fs-data
     mkdir /efs/drm 0774 drm system
     mkdir /efs/drm/sdrm 0774 drm system
     mkdir /efs/drm/sdrm/data_agent 0774 drm system
-    restorecon /efs/drm
-    restorecon /efs/drm/sdrm
-    restorecon /efs/drm/sdrm/data_agent
+    #restorecon /efs/drm
+    #restorecon /efs/drm/sdrm
+    #restorecon /efs/drm/sdrm/data_agent
 
     # DivX DRM
     mkdir /efs/.files 0775
@@ -221,7 +221,7 @@ on boot
     chown bluetooth net_bt_stack ro.bt.bdaddr_path
     chown radio net_bt_stack /efs/bluetooth/bt_addr
     chmod 0755 /efs/bluetooth/bt_addr
-    restorecon_recursive /efs/bluetooth
+    #restorecon_recursive /efs/bluetooth
 
     # IMEI
     mkdir /efs/imei 0775 radio radio
