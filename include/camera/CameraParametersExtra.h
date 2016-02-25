@@ -117,7 +117,7 @@ const char CameraParameters::EFFECT_VINTAGE_WARM[] = "vintage-warm"; \
 const char CameraParameters::EFFECT_WASHED[] = "washed"; \
 const char CameraParameters::SCENE_MODE_BACKLIGHT[] = "backlight"; \
 const char CameraParameters::SCENE_MODE_ASD[] = "asd"; \
-int CameraParameters::getInt64(const char *key) const { return -1; }; \
+int CameraParameters::getInt64(__attribute__((__unused__)) const char *key) const { return -1; } \
 const char *CameraParameters::getPreviewFrameRateMode() const { return get(KEY_PREVIEW_FRAME_RATE_MODE); }; \
 void CameraParameters::setPreviewFrameRateMode(const char *mode) { set(KEY_PREVIEW_FRAME_RATE_MODE, mode); }; \
 void CameraParameters::getMeteringAreaCenter(int *x, int *y) const { }; \
