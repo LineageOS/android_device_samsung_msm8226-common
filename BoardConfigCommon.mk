@@ -74,9 +74,6 @@ TARGET_QCOM_NO_FM_FIRMWARE := true
 # Fonts
 EXTENDED_FONT_FOOTPRINT := true
 
-# GPS
-TARGET_GPS_HAL_PATH := $(VENDOR_PATH)/gps
-
 # Init
 TARGET_INIT_VENDOR_LIB := libinit_msm
 
