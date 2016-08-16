@@ -20,6 +20,7 @@ LOCAL_PATH := device/samsung/msm8226-common
 TARGET_SPECIFIC_HEADER_PATH := device/samsung/msm8226-common/include
 
 # Architecture
+TARGET_USE_QCOM_BIONIC_OPTIMIZATION := false
 TARGET_CPU_MEMCPY_BASE_OPT_DISABLE := true
 TARGET_CPU_VARIANT := krait
 
