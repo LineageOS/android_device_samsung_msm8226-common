@@ -7,6 +7,7 @@
 
 # Charger
 /dev/keychord                                                 u:object_r:healthd:s0
+/sys/devices/.*bcl.*(/.*)?                                    u:object_r:sysfs_thermal:s0
 
 # CMHW
 /sys/devices/virtual/timed_output/vibrator(/.*)?              u:object_r:sysfs_vibeamp:s0
