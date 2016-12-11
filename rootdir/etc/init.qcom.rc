@@ -72,7 +72,7 @@ on fs
     setprop qcom.audio.init complete
 
     # Kickstart the Wireless subsystem
-    write /dev/wcnss_wlan 1
+    write /dev/wcnss_wlan ""
     
     # Adaptive LMK
     write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
