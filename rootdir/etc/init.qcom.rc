@@ -663,6 +663,7 @@ service rmt_storage /vendor/bin/rmt_storage
     class core
     user root
     group system wakelock
+    ioprio rt 0
     
 service thermal-engine /vendor/bin/thermal-engine -c /vendor/etc/thermal-engine-8226.conf
    class main
