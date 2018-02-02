@@ -190,6 +190,11 @@ PRODUCT_PACKAGES += \
 # Power HAL
 PRODUCT_PACKAGES += \
     android.hardware.power@1.1-service-qti
+    
+# Preopt
+PRODUCT_DEXPREOPT_SPEED_APPS += \
+    Settings \
+    SystemUI
 
 # Ramdisk
 PRODUCT_PACKAGES += \
