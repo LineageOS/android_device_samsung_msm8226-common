@@ -75,7 +75,7 @@ camera_module_t HAL_MODULE_INFO_SYM = {
     .common =
         {
             .tag = HARDWARE_MODULE_TAG,
-            .module_api_version = CAMERA_MODULE_API_VERSION_1_0,
+            .module_api_version = CAMERA_MODULE_API_VERSION_2_4,
             .hal_api_version = HARDWARE_HAL_API_VERSION,
             .id = CAMERA_HARDWARE_MODULE_ID,
             .name = "Samsung msm8226 Camera Wrapper",
@@ -90,7 +90,7 @@ camera_module_t HAL_MODULE_INFO_SYM = {
     .set_callbacks = NULL,      /* remove compilation warnings */
     .get_vendor_tag_ops = NULL, /* remove compilation warnings */
     .open_legacy = NULL,        /* remove compilation warnings */
-    .set_torch_mode = NULL,     /* remove compilation warnings */
+    .set_torch_mode = camera_set_torch_mode,
     .init = NULL,               /* remove compilation warnings */
     .reserved = {0},            /* remove compilation warnings */
 };
@@ -697,4 +697,12 @@ static int camera_get_camera_info(int camera_id, struct camera_info* info) {
     ALOGV("%s", __FUNCTION__);
     if (check_vendor_module()) return 0;
     return gVendorModule->get_camera_info(camera_id, info);
+}
+
+static int camera_set_torch_mode(const char* camera_id, bool enabled)
+{
+    ALOGV("%s", __FUNCTION__);
+    if (check_vendor_module())
+        return 0;
+    return gVendorModule->set_torch_mode(camera_id, enabled);
 }
