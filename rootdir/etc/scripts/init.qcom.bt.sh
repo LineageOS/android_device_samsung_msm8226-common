@@ -1,16 +1,16 @@
-#!/system/bin/sh
+#!/vendor/bin/sh
 
 LOG_TAG="qcom-bluetooth"
 LOG_NAME="${0}:"
 
 loge ()
 {
-  /system/bin/log -t $LOG_TAG -p e "$LOG_NAME $@"
+  /vendor/bin/log -t $LOG_TAG -p e "$LOG_NAME $@"
 }
 
 logi ()
 {
-  /system/bin/log -t $LOG_TAG -p i "$LOG_NAME $@"
+  /vendor/bin/log -t $LOG_TAG -p i "$LOG_NAME $@"
 }
 
 failed ()
@@ -54,7 +54,7 @@ case $LE_POWER_CLASS in
      logi "LE Power Class: To override, Before turning BT ON; setprop qcom.bt.le_dev_pwr_class <1 or 2 or 3>";;
 esac
 
-eval $(/system/vendor/bin/hci_qcomm_init -e $PWR_CLASS $LE_PWR_CLASS && echo "exit_code_hci_qcomm_init=0" || echo "exit_code_hci_qcomm_init=1")
+eval $(/vendor/bin/hci_qcomm_init -e $PWR_CLASS $LE_PWR_CLASS && echo "exit_code_hci_qcomm_init=0" || echo "exit_code_hci_qcomm_init=1")
 
 case $exit_code_hci_qcomm_init in
   0) logi "Bluetooth QSoC firmware download succeeded, $BTS_DEVICE $BTS_TYPE $BTS_BAUD $BTS_ADDRESS";;
