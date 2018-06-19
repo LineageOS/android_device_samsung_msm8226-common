@@ -53,8 +53,8 @@ on init
 on fs
     wait /dev/block/platform/soc.0/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc.0/${ro.boot.bootdevice} /dev/block/bootdevice
-    
-    mount_all fstab.qcom
+
+    mount_all fstab.qcom --early
     swapon_all fstab.qcom
 
     restorecon_recursive /efs
@@ -68,6 +68,14 @@ on fs
     # Adaptive LMK
     write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
     write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 53059 
+    
+on late-fs
+    # Start services for bootanim
+    start servicemanager
+    start surfaceflinger
+    start bootanim
+    # mount RW partitions which need run fsck
+    mount_all /vendor/etc/fstab.qcom --late
     
 on post-fs    
     # Allow writing to the kernel trace log.
