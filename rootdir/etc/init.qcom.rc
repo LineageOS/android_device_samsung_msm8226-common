@@ -67,9 +67,6 @@ on fs
     # GnssConfiguration doesn't actually look at gps.conf, just the debug file
     mount none /system/etc/gps.conf /system/etc/gps_debug.conf bind
     
-    # Start HW service manager early
-    start hwservicemanager
-    
 on late-fs
     # Start services for bootanim
     start servicemanager
