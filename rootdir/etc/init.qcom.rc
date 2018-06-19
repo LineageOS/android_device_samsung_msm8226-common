@@ -69,9 +69,6 @@ on fs
     write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
     write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 53059 
     
-    # Start HW service manager early
-    start hwservicemanager
-    
 on late-fs
     # Start services for bootanim
     start servicemanager
