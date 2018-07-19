@@ -622,7 +622,7 @@ service mpdecision /vendor/bin/mpdecision --avg_comp
 service qcamerasvr /vendor/bin/mm-qcamera-daemon
     class main
     user camera
-    group camera system inet input graphics bluetooth
+    group camera system inet input graphics bluetooth gps
 
 service qmuxd /vendor/bin/qmuxd
     class core
