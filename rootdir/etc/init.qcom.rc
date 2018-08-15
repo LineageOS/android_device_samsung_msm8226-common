@@ -77,6 +77,10 @@ on fs
     # Adaptive LMK
     write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
     write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 53059 
+    
+on post-fs    
+    # Allow writing to the kernel trace log.
+    chmod 0222 /sys/kernel/debug/tracing/trace_marker    
 
 on post-fs-data
     mkdir /data/misc/bluetooth 0770 bluetooth bluetooth
