@@ -28,7 +28,7 @@ setprop ro.qualcomm.bt.hci_transport smd
 POWER_CLASS=`getprop qcom.bt.dev_power_class`
 LE_POWER_CLASS=`getprop qcom.bt.le_dev_pwr_class`
 
-setprop bluetooth.status off
+setprop vendor.bluetooth.status off
 
 case $POWER_CLASS in
   1) PWR_CLASS="-p 0" ;
@@ -54,15 +54,15 @@ case $LE_POWER_CLASS in
      logi "LE Power Class: To override, Before turning BT ON; setprop qcom.bt.le_dev_pwr_class <1 or 2 or 3>";;
 esac
 
-eval $(/system/bin/hci_qcomm_init -e $PWR_CLASS $LE_PWR_CLASS && echo "exit_code_hci_qcomm_init=0" || echo "exit_code_hci_qcomm_init=1")
+eval $(/system/vendor/bin/hci_qcomm_init -e $PWR_CLASS $LE_PWR_CLASS && echo "exit_code_hci_qcomm_init=0" || echo "exit_code_hci_qcomm_init=1")
 
 case $exit_code_hci_qcomm_init in
   0) logi "Bluetooth QSoC firmware download succeeded, $BTS_DEVICE $BTS_TYPE $BTS_BAUD $BTS_ADDRESS";;
   *) failed "Bluetooth QSoC firmware download failed" $exit_code_hci_qcomm_init;
-     setprop bluetooth.status off
+     setprop vendor.bluetooth.status off
      exit $exit_code_hci_qcomm_init;;
 esac
 
-setprop bluetooth.status on
+setprop vendor.bluetooth.status on
 
 exit 0
