@@ -119,6 +119,15 @@ PRODUCT_PACKAGES += \
     hwcomposer.msm8226 \
     memtrack.msm8226
 
+# Camera
+PRODUCT_PACKAGES += \
+    android.hardware.camera.provider@2.4-impl \
+    camera.device@1.0-impl \
+    libboringssl-compat \
+    camera.msm8226 \
+    libxml2 \
+    Snap
+
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
