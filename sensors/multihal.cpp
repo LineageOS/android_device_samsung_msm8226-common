@@ -430,6 +430,9 @@ static int device__poll(struct sensors_poll_device_t *dev, sensors_event_t* data
 
 static int device__batch(struct sensors_poll_device_1 *dev, int handle,
         int flags, int64_t period_ns, int64_t timeout) {
+    (void)flags;
+    (void)timeout;
+
     sensors_poll_context_t* ctx = (sensors_poll_context_t*) dev;
 
     ctx->setDelay(handle, period_ns);
@@ -438,6 +441,9 @@ static int device__batch(struct sensors_poll_device_1 *dev, int handle,
 }
 
 static int device__flush(struct sensors_poll_device_1 *dev, int handle) {
+    (void)dev;
+    (void)handle;
+
     return -EINVAL;
 }
 
