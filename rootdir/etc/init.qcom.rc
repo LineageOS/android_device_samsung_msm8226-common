@@ -47,8 +47,6 @@ on early-init
 
     mkdir /efs 0771 system radio
 
-    symlink /data/tombstones /tombstones
-
     # Set permissions so radio can read
     chmod 0444 /proc/cmdline   
 
@@ -176,12 +174,11 @@ on post-fs-data
     chown radio system /sys/class/secgpio_check/secgpio_check_all/secgpio_ctrl
 
     # Create thombstones folders
-    mkdir /data/tombstones 0771 system system
-    mkdir /tombstones/modem 0771 system system
-    mkdir /tombstones/lpass 0771 system system
-    mkdir /tombstones/wcnss 0771 system system
-    mkdir /tombstones/dsps 0771 system system
-    mkdir /tombstones/mdm 0771 system system
+    mkdir /data/tombstones/modem 0771 system system
+    mkdir /data/tombstones/lpass 0771 system system
+    mkdir /data/tombstones/wcnss 0771 system system
+    mkdir /data/tombstones/dsps 0771 system system
+    mkdir /data/tombstones/mdm 0771 system system
 
     # Create directory for ril data
     mkdir /data/misc/radio 0775 radio radio
