@@ -14,7 +14,9 @@
 # limitations under the License.
 
 # Overlays
-DEVICE_PACKAGE_OVERLAYS += device/samsung/msm8226-common/overlay
+DEVICE_PACKAGE_OVERLAYS += \
+    device/samsung/msm8226-common/overlay \
+    device/samsung/msm8226-common/overlay-lineage
 
 # Permissions
 PRODUCT_COPY_FILES += \
