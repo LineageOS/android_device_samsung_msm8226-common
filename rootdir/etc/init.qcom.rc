@@ -649,7 +649,7 @@ service qmuxd /vendor/bin/qmuxd
     user radio
     group radio audio bluetooth gps diag oem_2950 log
 
-service qseecomd /vendor/bin/qseecomd
+service vendor.qseecomd /vendor/bin/qseecomd
     class core
     user root
     group root
