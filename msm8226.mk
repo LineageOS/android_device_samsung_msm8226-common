@@ -270,4 +270,6 @@ $(call inherit-product-if-exists, vendor/samsung/msm8226-common/msm8226-common-v
 $(call inherit-product, device/samsung/qcom-common/qcom-common.mk)
 
 # Android Go
-$(call inherit-product, build/target/product/go_defaults.mk)
+ifeq ($(GO_BUILD),true)
+    $(call inherit-product, build/target/product/go_defaults.mk)
+endif
