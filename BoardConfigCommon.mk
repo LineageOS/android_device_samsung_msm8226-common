@@ -55,9 +55,6 @@ BOARD_CHARGING_CMDLINE_VALUE := "charger"
 BOARD_CHARGER_ENABLE_SUSPEND := true
 WITH_LINEAGE_CHARGER := false
 
-# LineageHW
-BOARD_HARDWARE_CLASS += device/samsung/msm8226-common/lineagehw
-
 # Dexpreopt
 ifeq ($(HOST_OS),linux)
   ifneq ($(TARGET_BUILD_VARIANT),eng)
