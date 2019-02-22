@@ -133,6 +133,7 @@ on charger
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "interactive"
 
 on property:sys.boot_completed=1
+    setprop vendor.post_boot.parsed 1
     # Post boot services
     rm /data/system/perfd/default_values
     start mpdecision    
