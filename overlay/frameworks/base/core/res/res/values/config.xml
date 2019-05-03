@@ -23,26 +23,6 @@
     <!-- Disable rounded corners on windows to improve graphics performance -->
     <bool name="config_supportsRoundedCornersOnWindows">false</bool>
 
-    <!-- Default list of files pinned by the Pinner Service -->
-    <string-array translatable="false" name="config_defaultPinnerServiceFiles">
-        <item>"/system/framework/arm/boot-framework.oat"</item>
-        <item>"/system/framework/framework.jar"</item>
-        <item>"/system/framework/oat/arm/services.odex"</item>
-        <item>"/system/framework/services.jar"</item>
-        <item>"/system/framework/arm/boot.oat"</item>
-        <item>"/system/framework/arm/boot-core-libart.oat"</item>
-        <item>"/system/framework/boot-core-libart.vdex"</item>
-        <item>"/product/priv-app/SystemUI/SystemUI.apk"</item>
-        <item>"/product/priv-app/SystemUI/oat/arm/SystemUI.odex"</item>
-        <item>"/apex/com.android.runtime/javalib/core-oj.jar"</item>
-        <item>"/apex/com.android.runtime/javalib/core-libart.jar"</item>
-        <item>"/apex/com.android.media/javalib/updatable-media.jar"</item>
-        <item>"/system/lib/libsurfaceflinger.so"</item>
-    </string-array>
-
-    <!-- Should the pinner service pin the Home application? -->
-    <bool name="config_pinnerHomeApp">true</bool>
-
     <!-- Whether WiFi display is supported by this device.
         There are many prerequisites for this feature to work correctly.
         Here are a few of them:
