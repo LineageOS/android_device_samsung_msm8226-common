@@ -357,6 +357,11 @@ on boot
     chmod 664 /sys/class/devfreq/qcom,cpubw.68/max_freq
     chown radio system /sys/class/devfreq/qcom,cpubw.68/min_freq
     chmod 664 /sys/class/devfreq/qcom,cpubw.68/min_freq
+    
+    chown system system  /sys/devices/system/cpu/cpufreq/ondemand/sampling_early_factor
+    chmod 0664 /sys/devices/system/cpu/cpufreq/ondemand/sampling_early_factor        
+    chown system system  /sys/devices/system/cpu/cpufreq/ondemand/sampling_interim_factor
+    chmod 0664 /sys/devices/system/cpu/cpufreq/ondemand/sampling_interim_factor    
 
     chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_rate
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/timer_rate
