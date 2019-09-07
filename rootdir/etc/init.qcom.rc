@@ -514,11 +514,13 @@ on boot
     chown system system /sys/class/input/input0/enabled
     chown system system /sys/class/input/input1/enabled
     chown system system /sys/class/input/input2/enabled
+    chown system system /sys/class/input/input3/enabled
     chmod 0664 /sys/class/sec/tsp/cmd
     chmod 0660 /sys/class/sec/tsp/input/enabled
     chmod 0664 /sys/class/input/input0/enabled
     chmod 0664 /sys/class/input/input1/enabled
     chmod 0664 /sys/class/input/input2/enabled
+    chmod 0664 /sys/class/input/input3/enabled
 
     # Permission for touchkey
     chown system system /sys/class/sec/sec_touchkey/keypad_enable
