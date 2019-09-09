@@ -381,12 +381,11 @@ int sensors_poll_context_t::inject_sensor_data(struct sensors_poll_device_1 *dev
     int retval = -EINVAL;
     ALOGV("inject_sensor_data");
     // Get handle for the sensor owning the event being injected
-    int local_handle = get_local_handle(data->sensor);
+    //int local_handle = get_local_handle(data->sensor);
     sensors_poll_device_1_t* v1 = this->get_v1_device_by_handle(data->sensor);
     retval = v1->inject_sensor_data(dev, data);
     ALOGV("retval %d", retval);
     return retval;
-
 }
 
 int sensors_poll_context_t::close() {
