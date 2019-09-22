@@ -194,7 +194,9 @@ PRODUCT_PACKAGES += \
 # Preopt
 PRODUCT_DEXPREOPT_SPEED_APPS += \
     Settings \
-    SystemUI
+    Snap \
+    SystemUI \
+    TrebuchetQuickStep
 
 # Ramdisk
 PRODUCT_PACKAGES += \
