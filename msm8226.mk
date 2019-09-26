@@ -65,6 +65,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.rild.nitz_short_ons_2="" \
     persist.rild.nitz_short_ons_3="" \
     ril.subscription.types=NV,RUIM
+    
+PRODUCT_PROPERTY_OVERRIDES += \
+    pm.dexopt.shared=quicken    
 
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapstartsize=16m \
