@@ -47,6 +47,9 @@ const char KEY_SAMSUNG_CAMERA_MODE[] = "cam_mode";
 const char KEY_ISO_MODE[] = "iso";
 const char KEY_ZSL[] = "zsl";
 const char KEY_CAMERA_MODE[] = "camera-mode";
+const char KEY_SUPPORTED_HFR_SIZES[] = "hfr-size-values";
+const char KEY_SUPPORTED_MEM_COLOR_ENHANCE_MODES[] = "mce-values";
+const char KEY_SUPPORTED_VIDEO_HIGH_FRAME_RATE_MODES[] = "video-hfr-values";
 
 static Mutex gCameraWrapperLock;
 static camera_module_t* gVendorModule = 0;
@@ -137,6 +140,8 @@ static int check_vendor_module() {
     return rv;
 }
 
+#define KEY_VIDEO_HFR_VALUES "video-hfr-values"
+
 const static char* iso_values[] = {
     "auto,"
 #ifdef ISO_MODE_50
@@ -165,16 +170,30 @@ static char* camera_fixup_getparams(int id, const char* settings) {
     params.set(CameraParameters::KEY_SUPPORTED_SCENE_MODES,
                "auto,asd,action,portrait,landscape,night,night-portrait,theatre,beach,snow,sunset,"
                "steadyphoto,fireworks,sports,party,candlelight,backlight,flowers,AR");
+    
 
+    /* If the vendor has HFR values but doesn't also expose that
+     * this can be turned off, fixup the params to tell the Camera
+     * that it really is okay to turn it off.
+     */
+    const char *hfrModeValues = params.get(KEY_VIDEO_HFR_VALUES);
+    if (hfrModeValues && !strstr(hfrModeValues, "off")) {
+        char hfrModes[strlen(hfrModeValues) + 4 + 1];
+        sprintf(hfrModes, "%s,off", hfrModeValues);
+        params.set(KEY_VIDEO_HFR_VALUES, hfrModes);
+    }
+        
+    if (id == BACK_CAMERA_ID) {
+        params.set(CameraParameters::KEY_SUPPORTED_FLASH_MODES, "auto,on,off,torch");
+        params.set(KEY_SUPPORTED_HFR_SIZES, "1280x720,720x480");
+        params.set(KEY_SUPPORTED_VIDEO_HIGH_FRAME_RATE_MODES, "60,off");
+    }
+        
 #if !LOG_NDEBUG
     ALOGV("%s: fixed parameters:", __FUNCTION__);
     params.dump();
 #endif
     
-    if (id == BACK_CAMERA_ID) {
-        params.set(CameraParameters::KEY_SUPPORTED_FLASH_MODES, "auto,on,off,torch");
-    }    
-
     String8 strParams = params.flatten();
     char* ret = strdup(strParams.string());
 
