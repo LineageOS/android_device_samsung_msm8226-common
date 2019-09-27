@@ -590,25 +590,6 @@ service charger /charger
     group root system    
     seclabel u:r:charger:s0
 
-service healthd /sbin/healthd
-    class core
-    critical
-    seclabel u:r:healthd:s0
-
-service lpm /vendor/bin/lpm
-    class charger
-    critical
-
-service healthd-charger /sbin/healthd -n
-    class charger
-    critical
-    seclabel u:r:healthd:s0
-
-service charger_monitor /vendor/bin/charger_monitor
-    user system
-    group system
-    disabled
-
 service ds_fmc_appd /vendor/bin/ds_fmc_appd -p "rmnet0" -D
     class late_start
     user root
