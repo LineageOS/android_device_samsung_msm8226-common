@@ -106,6 +106,7 @@ on charger
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
+    write /sys/module/lpm_levels/enable_low_power/l2 4
     write /sys/module/msm_pm/modes/cpu0/power_collapse/suspend_enabled 1
     write /sys/module/msm_pm/modes/cpu1/power_collapse/suspend_enabled 1
     write /sys/module/msm_pm/modes/cpu2/power_collapse/suspend_enabled 1
@@ -131,10 +132,4 @@ on property:sys.boot_completed=1
     setprop vendor.post_boot.parsed 1
     # Post boot services
     rm /data/system/perfd/default_values
-    start mpdecision    
-
-on class_start:late_start
-    trigger enable-low-power
-
-on property:init.svc.recovery=running
-    trigger enable-low-power
+    start mpdecision
