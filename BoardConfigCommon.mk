@@ -101,6 +101,8 @@ TARGET_USERIMAGES_USE_F2FS := true
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 BOARD_ROOT_EXTRA_FOLDERS := efs firmware firmware-modem persist
+BOARD_ROOT_EXTRA_SYMLINKS := \
+    /data/tombstones:/tombstones
 
 # Netd
 TARGET_NEEDS_NETD_DIRECT_CONNECT_RULE := true
