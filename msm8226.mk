@@ -14,35 +14,42 @@
 # limitations under the License.
 
 # Overlays
-DEVICE_PACKAGE_OVERLAYS += device/samsung/msm8974-common/overlay
+DEVICE_PACKAGE_OVERLAYS += device/samsung/msm8226-common/overlay
 
 # Permissions
 PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.bluetooth.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth.xml \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth_le.xml \
-    frameworks/native/data/etc/android.hardware.consumerir.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.consumerir.xml \
+    frameworks/native/data/etc/android.hardware.camera.autofocus.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.front.xml \
-    frameworks/native/data/etc/android.hardware.ethernet.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.ethernet.xml \
+    frameworks/native/data/etc/android.hardware.camera.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.gps.xml \
-    frameworks/native/data/etc/android.hardware.sensor.barometer.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.barometer.xml \
-    frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.gyroscope.xml \
+    frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.accelerometer.xml \
+    frameworks/native/data/etc/android.hardware.sensor.compass.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.compass.xml \
     frameworks/native/data/etc/android.hardware.sensor.light.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.light.xml \
     frameworks/native/data/etc/android.hardware.sensor.proximity.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.proximity.xml \
+    frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:$(TARGET_COPY_OUT_VENDOR)/permissions/android.hardware.sensor.gyroscope.xml \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.host.xml \
-    frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.direct.xml \
-    frameworks/native/data/etc/android.software.sip.voip.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.sip.voip.xml
+    frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
+    frameworks/native/data/etc/android.software.sip.voip.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.sip.voip.xml \
+    frameworks/native/data/etc/android.software.midi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.midi.xml
 
 # System properties
 PRODUCT_PROPERTY_OVERRIDES += \
     audio.offload.buffer.size.kb=32 \
     audio.offload.gapless.enabled=false \
-    av.offload.enable=true
+    av.offload.enable=true\
+    ro.af.client_heap_size_kbyte=7168
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=196608
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.graphics.vulkan.disable=true
 
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.rild.nitz_plmn="" \
@@ -53,22 +60,37 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.rild.nitz_short_ons_0="" \
     persist.rild.nitz_short_ons_1="" \
     persist.rild.nitz_short_ons_2="" \
-    persist.rild.nitz_short_ons_3=""
+    persist.rild.nitz_short_ons_3="" \
+    ril.subscription.types=NV,RUIM
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.heapstartsize=8m \
+    dalvik.vm.heapgrowthlimit=192m \
+    dalvik.vm.heapsize=256m \
+    dalvik.vm.heaptargetutilization=0.75 \
+    dalvik.vm.heapminfree=512k \
+    dalvik.vm.heapmaxfree=8m    
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.boot-dex2oat-threads=4 \
+    dalvik.vm.dex2oat-swap=false \
+    dalvik.vm.checkjni=false \
+    dalvik.vm.dex2oat-flags=--no-watch-dog \
+    dalvik.vm.dex2oat-threads=4 \
+    dalvik.vm.image-dex2oat-threads=4 \
+    dalvik.vm.verify-bytecode=false \
+    persist.sys.purgeable_assets=1
 
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.timed.enable=true
-
-# Advanced Display
-PRODUCT_PACKAGES += \
-    AdvancedDisplay
 
 # Audio
 PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-impl \
     android.hardware.audio.effect@2.0-impl \
-    audio_policy.msm8974 \
+    audio_policy.msm8226 \
     audio.a2dp.default \
-    audio.primary.msm8974 \
+    audio.primary.msm8226 \
     audio.r_submix.default \
     audio.usb.default \
     libaudio-resampler \
@@ -91,10 +113,10 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-service \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
-    copybit.msm8974 \
-    gralloc.msm8974 \
-    hwcomposer.msm8974 \
-    memtrack.msm8974
+    copybit.msm8226 \
+    gralloc.msm8226 \
+    hwcomposer.msm8226 \
+    memtrack.msm8226
 
 # DRM
 PRODUCT_PACKAGES += \
@@ -104,7 +126,7 @@ PRODUCT_PACKAGES += \
 # GPS
 PRODUCT_PACKAGES += \
     android.hardware.gnss@1.0-impl \
-    gps.msm8974
+    gps.msm8226
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/gps/etc/flp.conf:system/etc/flp.conf \
@@ -112,16 +134,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/gps/etc/izat.conf:system/etc/izat.conf \
     $(LOCAL_PATH)/gps/etc/sap.conf:system/etc/sap.conf
 
-# IR Blaster
-PRODUCT_PACKAGES += \
-    android.hardware.ir@1.0-impl \
-    consumerir.msm8974
-
 # Keylayouts
 PRODUCT_COPY_FILES += \
-    device/samsung/msm8974-common/keylayout/cyttsp-i2c.kl:system/usr/keylayout/cyttsp-i2c.kl \
-    device/samsung/msm8974-common/keylayout/keypad_8960.kl:system/usr/keylayout/keypad_8960.kl \
-    device/samsung/msm8974-common/keylayout/Vendor_04e8_Product_7021.kl:system/usr/keylayout/Vendor_04e8_Product_7021.kl
+    $(LOCAL_PATH)/keylayout/Button_Jack.kl:system/usr/keylayout/Button_Jack.kl \
+    $(LOCAL_PATH)/keylayout/synaptics_rmi4_i2c.kl:system/usr/keylayout/synaptics_rmi4_i2c.kl
 
 # Keymaster
 PRODUCT_PACKAGES += \
@@ -132,7 +148,8 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml  \
-    device/samsung/msm8974-common/configs/media_codecs.xml:system/etc/media_codecs.xml
+    frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml \
+    device/samsung/msm8226-common/configs/media_codecs.xml:system/etc/media_codecs.xml
 
 # OMX
 PRODUCT_PACKAGES += \
@@ -149,6 +166,18 @@ PRODUCT_PACKAGES += \
 # Power HAL
 PRODUCT_PACKAGES += \
     android.hardware.power@1.0-service-qti
+
+# Ramdisk
+PRODUCT_PACKAGES += \
+    init.qcom.bt.sh \
+    init.ril.sh
+
+PRODUCT_PACKAGES += \
+    init.qcom.power.rc \
+    init.qcom.rc \
+    init.qcom.usb.rc \
+    init.recovery.qcom.rc \
+    ueventd.qcom.rc
 
 # RenderScript HAL
 PRODUCT_PACKAGES += \
@@ -170,13 +199,27 @@ PRODUCT_PACKAGES += \
 # Wifi
 PRODUCT_PACKAGES += \
     android.hardware.wifi@1.0-service \
+    dhcpcd.conf \
     hostapd \
     wificond \
     wpa_supplicant \
-    wpa_supplicant.conf
+    wpa_supplicant.conf \
+    libwpa_client
 
+PRODUCT_PACKAGES += \
+    libcurl \
+    libwcnss_qmi \
+    wcnss_service
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/wifi/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
+    $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
+    $(LOCAL_PATH)/configs/wifi/hostapd_default.conf:system/etc/hostapd/hostapd_default.conf \
+    $(LOCAL_PATH)/prima/WCNSS_cfg.dat:system/etc/firmware/wlan/prima/WCNSS_cfg.dat \
+    $(LOCAL_PATH)/prima/WCNSS_qcom_cfg.ini:system/etc/firmware/wlan/prima/WCNSS_qcom_cfg.ini \
+    $(LOCAL_PATH)/prima/WCNSS_qcom_wlan_nv.bin:system/etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin
 # Get non-open-source specific aspects
-$(call inherit-product-if-exists, vendor/samsung/msm8974-common/msm8974-common-vendor.mk)
+$(call inherit-product-if-exists, vendor/samsung/msm8226-common/msm8226-common-vendor.mk)
 
-# common msm8974
+# common msm8226
 $(call inherit-product, device/samsung/qcom-common/qcom-common.mk)

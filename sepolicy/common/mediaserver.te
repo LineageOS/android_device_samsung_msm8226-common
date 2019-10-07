@@ -5,3 +5,4 @@ allow mediaserver sysfs_camera:dir search;
 allow mediaserver sysfs_camera:file r_file_perms;
 allow mediaserver thermal-engine:unix_stream_socket connectto;
 allow mediaserver vendor_file:file execmod;
+allow mediaserver system_data_file:sock_file write;

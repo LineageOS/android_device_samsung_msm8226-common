@@ -13,13 +13,12 @@
 /dev/pn547                                              u:object_r:nfc_device:s0
 /dev/rfkill                                             u:object_r:wlan_device:s0
 /dev/sec-nfc                                            u:object_r:nfc_device:s0
+# this should be needed but it says it is already defined
+#/dev/keychord                                           u:object_r:keychord_device:s0
 
 # efs files
 /efs/bluetooth(/.*)?                                    u:object_r:bluetooth_efs_file:s0
 /efs/wifi(/.*)?                                         u:object_r:wifi_efs_file:s0
-
-# executeables
-/system/vendor/bin/macloader                            u:object_r:macloader_exec:s0
 
 # firmware
 /system/vendor/firmware/bcm(.*).hcd                     u:object_r:bt_fw_file:s0
@@ -36,10 +35,6 @@
 /sys/devices/platform/bcm[0-9]+_bluetooth/rfkill/rfkill0/state   u:object_r:sysfs_bluetooth_writable:s0
 /sys/devices/virtual/camera(/.*)?                                u:object_r:sysfs_camera:s0
 /sys/devices/virtual/sec/sec_key/hall_irq_ctrl                   u:object_r:sysfs_sec:s0
+/sys/devices/.*bcl.*(/.*)?                                       u:object_r:sysfs_thermal:s0
 
-# mdnie sysfs
-/sys/devices/virtual/lcd/panel/panel/auto_brightness    u:object_r:sysfs_mdnie:s0
-/sys/devices/virtual/mdnie/mdnie/accessibility          u:object_r:sysfs_mdnie:s0
-/sys/devices/virtual/mdnie/mdnie/mode                   u:object_r:sysfs_mdnie:s0
-/sys/devices/virtual/mdnie/mdnie/outdoor                u:object_r:sysfs_mdnie:s0
-/sys/devices/virtual/mdnie/mdnie/scenario               u:object_r:sysfs_mdnie:s0
+

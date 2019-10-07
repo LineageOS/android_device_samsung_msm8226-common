@@ -23,7 +23,7 @@ if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
 
 # Override anything that may come from the calling environment
 CM_ROOT="$MY_DIR"/../../..
-BOARD=msm8974
+BOARD=msm8226
 DEVICE_COMMON=${BOARD}-common
 VENDOR=samsung
 
