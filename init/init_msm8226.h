@@ -40,8 +40,8 @@ void gsm_properties(char const default_network[],
 void wifi_properties(char const carrier[],
         char const noril[]);
 void init_target_properties();
-void property_override(char const prop[], char const value[]);
-void property_override_dual(char const system_prop[],
-        char const vendor_prop[], char const value[]);
+void property_override(char const prop[], char const value[], bool add=false);
+void set_ro_product_prop(char const prop[], char const value[]);
+void set_build_fingerprint(char const value[]);
 
 #endif /* __INIT_MSM8226__H__ */
