@@ -5,8 +5,13 @@ allow hal_lineage_livedisplay_sysfs display_vendor_data_file:file create_file_pe
 # Allow LiveDisplay to read and write to files in sysfs_graphics
 allow hal_lineage_livedisplay_sysfs {
     sysfs_graphics
+    sysfs_mdnie
 }:dir search;
 
 allow hal_lineage_livedisplay_sysfs {
     sysfs_graphics
+    sysfs_mdnie
 }:file rw_file_perms;
+
+allow hal_lineage_livedisplay_sysfs sysfs:file { open read write };
+allow hal_lineage_livedisplay_sysfs sysfs:file getattr;

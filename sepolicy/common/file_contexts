@@ -27,7 +27,8 @@
 /(vendor|system/vendor)/bin/hw/android\.hardware\.sensors@1\.0-service.samsung8226        u:object_r:hal_sensors_default_exec:s0
 /(vendor|system/vendor)/bin/hw/vendor\.lineage\.livedisplay@2\.0-service\.samsung-qcom    u:object_r:hal_lineage_livedisplay_sysfs_exec:s0
 /(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch@1\.0-service\.samsung               u:object_r:hal_lineage_touch_default_exec:s0
-
+/(vendor|system/vendor)/bin/hw/android\.hardware\.light@2\.0-service\.samsung             u:object_r:hal_light_default_exec:s0
+ 
 # sockets
 /data/cam_socket3                                       u:object_r:camera_socket:s0
 
@@ -37,8 +38,7 @@
 /sys/devices/virtual/camera(/.*)?                                u:object_r:sysfs_camera:s0
 /sys/devices/virtual/input(/.*)?                                 u:object_r:sysfs_input:s0
 /sys/devices/.*bcl.*(/.*)?                                       u:object_r:sysfs_thermal:s0
-/sys/module/dhd/parameters/firmware_path                         u:object_r:sysfs_wifi_writeable:s0
-/sys/module/dhd/parameters/nvram_path                            u:object_r:sysfs_wifi_writeable:s0
+/sys/module/wlan/parameters/fwpath                               u:object_r:sysfs_wifi_writeable:s0
 
 # sysfs - battery/charger
 /sys/devices/battery\.[0-9]+/power_supply(/.*)?         u:object_r:sysfs_batteryinfo:s0
@@ -69,6 +69,7 @@
 # sysfs - leds
 /sys/devices/i2c\.[0-9]+/i2c-[0-9]+/[0-9]+-[a-z0-9]+/leds(/.*)?  u:object_r:sysfs_leds:s0
 /sys/devices/i2c\.[0-9]+/i2c-[0-9]+/[0-9]+-[a-z0-9]+/max[a-z0-9]+-led/leds(/.*)? u:object_r:sysfs_leds:s0
+/sys/class/leds(/.*)?                                   u:object_r:sysfs_leds:s0
 
 # sysfs - sec
 /sys/devices/platform/sec-thermistor(/.*)?              u:object_r:sysfs_sec_thermistor:s0
@@ -86,4 +87,4 @@
 /sys/devices/virtual/sensors(/.*)?                      u:object_r:sysfs_sensors:s0
 
 # sysfs - usb
-/sys/devices/virtual/host_notify/usb_otg(/.*)?               u:object_r:sysfs_usb_otg:s0
+/sys/devices/virtual/host_notify/usb_otg(/.*)?          u:object_r:sysfs_usb_otg:s0

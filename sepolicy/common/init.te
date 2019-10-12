@@ -21,6 +21,7 @@ allow init {
     sysfs_input
     sysfs_kgsl
     sysfs_leds
+    sysfs_mdnie
     sysfs_msmuart_file
     sysfs_sec_bamdmux
     sysfs_sec_barcode_emul
