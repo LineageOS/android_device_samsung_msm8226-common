@@ -98,10 +98,6 @@ TARGET_KEYMASTER_SKIP_WAITING_FOR_QSEE := true
 # SELinux
 include device/samsung/msm8226-common/sepolicy/sepolicy.mk
 
-# Init
-TARGET_INIT_VENDOR_LIB := libinit_msm8226
-TARGET_RECOVERY_DEVICE_MODULES := libinit_msm8226
-
 # Partitions
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
