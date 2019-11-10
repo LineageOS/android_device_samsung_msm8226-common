@@ -92,10 +92,6 @@ TARGET_KEYMASTER_SKIP_WAITING_FOR_QSEE := true
 # SELinux
 include device/samsung/msm8226-common/sepolicy/sepolicy.mk
 
-# Init
-TARGET_INIT_VENDOR_LIB := libinit_msm8226
-TARGET_RECOVERY_DEVICE_MODULES := libinit_msm8226
-
 # Optimize
 PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
 PRODUCT_ALWAYS_PREOPT_EXTRACTED_APK := true
