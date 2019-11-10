@@ -61,6 +61,11 @@ ifeq ($(HOST_OS),linux)
   endif
 endif
 
+# Filesystem
+BOARD_ROOT_EXTRA_FOLDERS := efs firmware firmware-modem persist
+BOARD_ROOT_EXTRA_SYMLINKS := /data/tombstones:/tombstones
+TARGET_FS_CONFIG_GEN := $(COMMON_PATH)/config.fs
+
 WITH_DEXPREOPT_DEBUG_INFO := false
 USE_DEX2OAT_DEBUG := false
 DONT_DEXPREOPT_PREBUILTS := true

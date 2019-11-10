@@ -28,7 +28,13 @@
 /(vendor|system/vendor)/bin/hw/vendor\.lineage\.livedisplay@2\.0-service\.samsung-qcom    u:object_r:hal_lineage_livedisplay_sysfs_exec:s0
 /(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch@1\.0-service\.samsung               u:object_r:hal_lineage_touch_default_exec:s0
 /(vendor|system/vendor)/bin/hw/android\.hardware\.light@2\.0-service\.samsung             u:object_r:hal_light_default_exec:s0
- 
+
+# rootfs folders
+/firmware               u:object_r:firmware_file:s0
+/firmware-modem         u:object_r:firmware_file:s0
+/tombstones             u:object_r:rootfs:s0
+/persist                u:object_r:rootfs:s0
+
 # sockets
 /data/cam_socket3                                       u:object_r:camera_socket:s0
 
