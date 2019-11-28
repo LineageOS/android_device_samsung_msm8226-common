@@ -117,9 +117,9 @@ on post-fs-data
     # For WIFI MAC address
     mkdir /efs/wifi 0775 radio system
     chown system wifi /efs/wifi/.mac.info
-    chmod 0660 /efs/wifi/.mac.info
-    #restorecon /efs/wifi/.mac.info
-    chmod 0660 /efs/wifi/.mac.cob
+    chmod 0664 /efs/wifi/.mac.info
+    restorecon /efs/wifi/.mac.info
+    chmod 0664 /efs/wifi/.mac.cob
 
     # Create directory used by audio subsystem
     mkdir /data/misc/audio 0770 audio audio
@@ -191,9 +191,9 @@ on post-fs-data
     mkdir /efs/drm 0774 drm system
     mkdir /efs/drm/sdrm 0774 drm system
     mkdir /efs/drm/sdrm/data_agent 0774 drm system
-    #restorecon /efs/drm
-    #restorecon /efs/drm/sdrm
-    #restorecon /efs/drm/sdrm/data_agent
+    restorecon /efs/drm
+    restorecon /efs/drm/sdrm
+    restorecon /efs/drm/sdrm/data_agent
 
     # DivX DRM
     mkdir /efs/.files 0775
@@ -269,7 +269,7 @@ on boot
     chown bluetooth net_bt_stack ro.bt.bdaddr_path
     chown radio net_bt_stack /efs/bluetooth/bt_addr
     chmod 0755 /efs/bluetooth/bt_addr
-    #restorecon_recursive /efs/bluetooth
+    restorecon_recursive /efs/bluetooth
 
     # IMEI
     mkdir /efs/imei 0775 radio radio
