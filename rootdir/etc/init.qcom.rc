@@ -118,8 +118,7 @@ on post-fs-data
     mkdir /efs/wifi 0775 radio system
     chown system wifi /efs/wifi/.mac.info
     chmod 0660 /efs/wifi/.mac.info
-    #restorecon /efs/wifi/.mac.info
-    chmod 0660 /efs/wifi/.mac.cob
+    restorecon /efs/wifi/.mac.info
 
     # Create directory used by audio subsystem
     mkdir /data/misc/audio 0770 audio audio
