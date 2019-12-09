@@ -83,9 +83,6 @@ PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := true
 TARGET_KERNEL_ADDITIONAL_FLAGS := \
     HOSTCFLAGS="-fuse-ld=lld -Wno-unused-command-line-argument"
 
-# Keymaster
-TARGET_KEYMASTER_SKIP_WAITING_FOR_QSEE := true
-
 # Legacy memfd
 TARGET_HAS_MEMFD_BACKPORT := true
 
