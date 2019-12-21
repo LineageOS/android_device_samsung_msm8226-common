@@ -71,7 +71,7 @@
 /sys/devices/i2c\.[0-9]+/i2c-[0-9]+/[0-9]+-[a-z0-9]+/leds(/.*)?  u:object_r:sysfs_leds:s0
 /sys/devices/i2c\.[0-9]+/i2c-[0-9]+/[0-9]+-[a-z0-9]+/max[a-z0-9]+-led/leds(/.*)? u:object_r:sysfs_leds:s0
 /sys/class/leds(/.*)?                                   u:object_r:sysfs_leds:s0
-/sys/devices/fd900000.qcom,mdss_mdp/qcom,mdss_fb_primary.161/leds/lcd-backlight(/.*)? u:object_r:sysfs_leds:s0
+/sys/devices/fd900000.qcom,mdss_mdp/qcom,mdss_fb_primary(.*)/leds/lcd-backlight(/.*)? u:object_r:sysfs_leds:s0
 /sys/devices/devices/i2c.82/i2c-21/21-0020/leds/button-backlight(/.*)? u:object_r:sysfs_leds:s0
 
 # sysfs - mdnie
