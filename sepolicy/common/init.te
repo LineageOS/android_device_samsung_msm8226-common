@@ -54,3 +54,6 @@ allow init {
 allow init {
     wcnss_device
 }:chr_file w_file_perms;
+
+allow init sysfs:file setattr;
+allow init sysfs_devfreq:file setattr;
