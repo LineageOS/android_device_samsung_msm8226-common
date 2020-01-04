@@ -53,3 +53,5 @@ allow init {
     sysfs_sec_key
     sysfs_thermal
 }:file w_file_perms;
+
+allow init sysfs_devfreq:file setattr;
