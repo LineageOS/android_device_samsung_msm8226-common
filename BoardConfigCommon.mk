@@ -81,7 +81,13 @@ MAX_EGL_CACHE_KEY_SIZE := 12*1024
 MAX_EGL_CACHE_SIZE := 2048*1024
 
 # Filesystem
+BOARD_ROOT_EXTRA_SYMLINKS := /data/tombstones:/tombstones
 TARGET_FS_CONFIG_GEN := device/samsung/msm8226-common/config.fs
+BOARD_ROOT_EXTRA_FOLDERS := \
+    firmware-modem \
+    firmware \
+    efs \
+    persist
 
 # HIDL
 DEVICE_MANIFEST_FILE := device/samsung/msm8226-common/manifest.xml
