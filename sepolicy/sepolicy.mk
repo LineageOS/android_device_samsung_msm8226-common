@@ -14,8 +14,8 @@
 # limitations under the License.
 #
 
+ifeq ($(CONFIG_NEO_MSM_SEPOLICY_TYPE), common)
 include device/qcom/sepolicy-legacy/sepolicy.mk
-
-# Board specific SELinux policy variable definitions
 BOARD_SEPOLICY_DIRS += \
     device/samsung/msm8226-common/sepolicy/common
+endif
