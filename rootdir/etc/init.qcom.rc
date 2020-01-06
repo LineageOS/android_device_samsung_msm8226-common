@@ -578,7 +578,6 @@ service adsprpcd /vendor/bin/adsprpcd
 service charger /charger
     class charger
     critical
-    seclabel u:r:healthd:s0
     
 service ds_fmc_appd /vendor/bin/ds_fmc_appd -p "rmnet0" -D
     class late_start
@@ -595,7 +594,6 @@ service hciattach /vendor/bin/init.qcom.bt.sh
     user bluetooth
     group bluetooth net_bt_admin
     disabled
-    seclabel u:r:bluetooth_loader:s0
     oneshot
 
 on property:vendor.bluetooth.hciattach=true
