@@ -27,6 +27,7 @@
 #define LOG_TAG "CameraWrapper"
 #include <cutils/log.h>
 
+#include <android-base/properties.h>
 #include <utils/threads.h>
 #include <utils/String8.h>
 #include <hardware/hardware.h>
@@ -41,11 +42,24 @@
 #define OPEN_RETRY_MSEC 40
 
 using namespace android;
+using android::base::GetProperty;
+
+enum {
+    UNKNOWN = -1,
+    S3VE3G,
+    KMINI3G,
+    MS01,
+    MATISSE,
+    MILLET,
+};
+
+static int product_device = UNKNOWN;
 
 const char KEY_SUPPORTED_ISO_MODES[] = "iso-values";
 const char KEY_SAMSUNG_CAMERA_MODE[] = "cam_mode";
 const char KEY_ISO_MODE[] = "iso";
 const char KEY_ZSL[] = "zsl";
+static const char OFF[] = "off";
 const char KEY_CAMERA_MODE[] = "camera-mode";
 const char KEY_SUPPORTED_HFR_SIZES[] = "hfr-size-values";
 const char KEY_SUPPORTED_MEM_COLOR_ENHANCE_MODES[] = "mce-values";
@@ -94,6 +108,49 @@ camera_module_t HAL_MODULE_INFO_SYM = {
     .init = NULL,               /* remove compilation warnings */
     .reserved = {0},            /* remove compilation warnings */
 };
+
+static int get_product_device()
+{
+    if (product_device != UNKNOWN)
+        return product_device;
+
+    std::string device = GetProperty("ro.product.device", "");
+
+    if (device == "s3ve3gxx")
+        product_device = S3VE3G;
+    else if (device == "s3ve3gjv")
+        product_device = S3VE3G;
+    else if (device == "kmini3g")
+        product_device = KMINI3G;
+    else if (device == "ms013g")
+        product_device = MS01;
+    else if (device == "ms013lte")
+        product_device = MS01;
+    else if (device == "matissewifi")
+        product_device = MATISSE;
+    else if (device == "matissewifiue")
+        product_device = MATISSE;
+    else if (device == "matisse3g")
+        product_device = MATISSE;
+    else if (device == "matisse3gjv")
+        product_device = MATISSE;
+    else if (device == "matisselte")
+        product_device = MATISSE;
+    else if (device == "milletwifi")
+        product_device = MILLET;
+    else if (device == "milletwifiue")
+        product_device = MILLET;
+    else if (device == "millet3g")
+        product_device = MILLET;
+    else if (device == "milletlte")
+        product_device = MILLET;
+    else if (device == "milletltetmo")
+        product_device = MILLET;
+    else
+        product_device = UNKNOWN;
+
+    return product_device;
+}
 
 typedef struct wrapper_camera_device {
     camera_device_t base;
@@ -166,34 +223,44 @@ static char* camera_fixup_getparams(int id, const char* settings) {
 #endif
 
     params.set(KEY_SUPPORTED_ISO_MODES, iso_values[id]);
-    params.set(CameraParameters::KEY_PREFERRED_PREVIEW_SIZE_FOR_VIDEO, "1280x720");
-    params.set(CameraParameters::KEY_SUPPORTED_SCENE_MODES,
-               "auto,asd,action,portrait,landscape,night,night-portrait,theatre,beach,snow,sunset,"
-               "steadyphoto,fireworks,sports,party,candlelight,backlight,flowers,AR");
-    
+    if (get_product_device() == S3VE3G || get_product_device() == MS01 || get_product_device() == KMINI3G) {
+        params.set(CameraParameters::KEY_PREFERRED_PREVIEW_SIZE_FOR_VIDEO, "1280x720");
+        params.set(CameraParameters::KEY_SUPPORTED_SCENE_MODES,
+                       "auto,asd,action,portrait,landscape,night,night-portrait,theatre,beach,snow,sunset,"
+                       "steadyphoto,fireworks,sports,party,candlelight,backlight,flowers,AR");
+        /* If the vendor has HFR values but doesn't also expose that
+         * this can be turned off, fixup the params to tell the Camera
+         * that it really is okay to turn it off.
+         */
+        const char *hfrModeValues = params.get(KEY_VIDEO_HFR_VALUES);
+        if (hfrModeValues && !strstr(hfrModeValues, "off")) {
+            char hfrModes[strlen(hfrModeValues) + 4 + 1];
+            sprintf(hfrModes, "%s,off", hfrModeValues);
+            params.set(KEY_VIDEO_HFR_VALUES, hfrModes);
+        }
+        if (id == BACK_CAMERA_ID) {
+            params.set(CameraParameters::KEY_SUPPORTED_FLASH_MODES, "auto,on,off,torch");
+            params.set(KEY_SUPPORTED_HFR_SIZES, "1280x720,720x480");
+            params.set(KEY_SUPPORTED_VIDEO_HIGH_FRAME_RATE_MODES, "60,off");
+        }
+    }
 
-    /* If the vendor has HFR values but doesn't also expose that
-     * this can be turned off, fixup the params to tell the Camera
-     * that it really is okay to turn it off.
-     */
-    const char *hfrModeValues = params.get(KEY_VIDEO_HFR_VALUES);
-    if (hfrModeValues && !strstr(hfrModeValues, "off")) {
-        char hfrModes[strlen(hfrModeValues) + 4 + 1];
-        sprintf(hfrModes, "%s,off", hfrModeValues);
-        params.set(KEY_VIDEO_HFR_VALUES, hfrModes);
+    if (( get_product_device() == MATISSE) || ( get_product_device() == MILLET)) {
+        if(id == BACK_CAMERA_ID){
+            params.set(CameraParameters::KEY_PREFERRED_PREVIEW_SIZE_FOR_VIDEO, "1024x768" );
+            params.set(CameraParameters::KEY_SUPPORTED_PREVIEW_SIZES, "1024x768,1024x576,800x480,720x480,640x480,320x240,176x144");
+        } else {
+            params.set(CameraParameters::KEY_PREFERRED_PREVIEW_SIZE_FOR_VIDEO, "640x480" );
+            params.set(CameraParameters::KEY_SUPPORTED_PREVIEW_SIZES, "640x480,720x480,320x240,176x144");
+        }
+        params.set(KEY_VIDEO_HFR_VALUES, "off");
     }
-        
-    if (id == BACK_CAMERA_ID) {
-        params.set(CameraParameters::KEY_SUPPORTED_FLASH_MODES, "auto,on,off,torch");
-        params.set(KEY_SUPPORTED_HFR_SIZES, "1280x720,720x480");
-        params.set(KEY_SUPPORTED_VIDEO_HIGH_FRAME_RATE_MODES, "60,off");
-    }
-        
+
 #if !LOG_NDEBUG
     ALOGV("%s: fixed parameters:", __FUNCTION__);
     params.dump();
 #endif
-    
+
     String8 strParams = params.flatten();
     char* ret = strdup(strParams.string());
 
@@ -236,6 +303,10 @@ static char* camera_fixup_setparams(struct camera_device* device, const char* se
     if (id != 1) {
         params.set(KEY_ZSL, isVideo ? "off" : "on");
         params.set(KEY_CAMERA_MODE, isVideo ? "0" : "1");
+    }
+
+    if (( get_product_device() == MATISSE) || ( get_product_device() == MILLET)) {
+        params.set(KEY_ZSL, OFF);
     }
 
 #if !LOG_NDEBUG
