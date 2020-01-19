@@ -567,6 +567,9 @@ on property:dev.bootcomplete=1
     symlink /data/user_de/0/com.android.providers.telephony/shared_prefs /data/data/com.android.providers.telephony/shared_prefs
     restorecon /data/data/com.android.providers.telephony/databases
     restorecon /data/data/com.android.providers.telephony/shared_pref
+
+    # Fix Alarm permission
+    chmod 0664 /dev/alarm
     
 # Services begin here
 
