@@ -24,6 +24,8 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# Fix alarm permission
+/dev/alarm              0664   system     system
 
 # the DIAG device node HAS TO BE world writable/readable, otherwise libdiag cant open the socket :/
 /dev/diag                 0777   system     oem_2950
