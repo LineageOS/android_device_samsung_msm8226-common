@@ -577,7 +577,8 @@ service adsprpcd /vendor/bin/adsprpcd
 
 service charger /system/bin/charger
     class charger
-    group system graphics
+    user system
+    group system graphics input
     seclabel u:r:charger:s0
     
 service ds_fmc_appd /vendor/bin/ds_fmc_appd -p "rmnet0" -D
