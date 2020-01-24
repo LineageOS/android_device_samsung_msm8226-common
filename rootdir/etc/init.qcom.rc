@@ -44,10 +44,6 @@ on early-init
     chmod 0444 /proc/cmdline   
 
 on init
-    # Support legacy paths
-    symlink /sdcard /mnt/sdcard
-    symlink /sdcard /storage/sdcard0
-    
     write /proc/sys/vm/page-cluster 0
 
 on fs
