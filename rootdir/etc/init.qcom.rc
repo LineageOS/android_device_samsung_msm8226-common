@@ -579,6 +579,7 @@ service charger /system/bin/charger
     class charger
     user system
     group system graphics input
+    capabilities SYS_BOOT
     seclabel u:r:charger:s0
     
 service ds_fmc_appd /vendor/bin/ds_fmc_appd -p "rmnet0" -D
