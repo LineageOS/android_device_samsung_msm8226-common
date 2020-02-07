@@ -29,9 +29,6 @@
         <item>"/system/framework/framework.jar"</item>
         <item>"/system/framework/oat/arm/services.odex"</item>
         <item>"/system/framework/services.jar"</item>
-        <item>"/system/framework/arm/boot.oat"</item>
-        <item>"/system/framework/arm/boot-core-libart.oat"</item>
-        <item>"/system/framework/boot-core-libart.vdex"</item>
         <item>"/product/priv-app/SystemUI/SystemUI.apk"</item>
         <item>"/product/priv-app/SystemUI/oat/arm/SystemUI.odex"</item>
         <item>"/apex/com.android.runtime/javalib/core-oj.jar"</item>
