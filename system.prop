@@ -24,6 +24,9 @@ persist.sys.purgeable_assets=1
 # Dexopt
 pm.dexopt.shared=quicken
 
+# fastbootd
+ro.fastbootd.available=true
+
 # GL
 ro.opengles.version=196608
 
