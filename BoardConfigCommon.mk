@@ -20,6 +20,8 @@ include device/samsung/qcom-common/BoardConfigCommon.mk
 TARGET_BOARD_PLATFORM := msm8226
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno305
 
+BUILD_BROKEN_USES_BUILD_COPY_HEADERS := true
+
 # Architecture
 TARGET_CPU_VARIANT := generic
 TARGET_CPU_VARIANT_RUNTIME := krait
