@@ -288,9 +288,6 @@ on boot
     chown root radio /proc/cmdline
     chmod 0644 /proc/cmdline
 
-    # Remove SUID bit for iproute2 ip tool
-    chmod 0755 /system/bin/ip
-
     # For bridgemgr daemon to inform the USB driver of the correct transport
     chown radio radio /sys/class/android_usb/f_rmnet_smd_sdio/transport
 
