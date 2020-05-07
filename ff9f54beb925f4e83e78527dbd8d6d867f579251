@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d43edfa_42b12775",
+        "filename": "sepolicy/common/hal_sensors_default.te",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 24387
+      },
+      "writtenOn": "2020-05-07T08:03:29Z",
+      "side": 1,
+      "message": "It is possible to identify the sysfs and label it ?",
+      "revId": "ff9f54beb925f4e83e78527dbd8d6d867f579251",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f6a4aa_a6ade421",
+        "filename": "sepolicy/common/hal_sensors_default.te",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 24387
+      },
+      "writtenOn": "2020-05-07T08:03:29Z",
+      "side": 1,
+      "message": "It is possible to identify the sysfs and label it?",
+      "revId": "ff9f54beb925f4e83e78527dbd8d6d867f579251",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e157ece2_bbf59c7f",
+        "filename": "sepolicy/common/init.te",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 24387
+      },
+      "writtenOn": "2020-05-07T08:03:29Z",
+      "side": 1,
+      "message": "It is possible to identify the sysfs and label it?",
+      "revId": "ff9f54beb925f4e83e78527dbd8d6d867f579251",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
