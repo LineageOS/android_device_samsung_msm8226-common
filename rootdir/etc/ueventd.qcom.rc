@@ -28,6 +28,7 @@
 # the DIAG device node HAS TO BE world writable/readable, otherwise libdiag cant open the socket :/
 /dev/diag                 0777   system     oem_2950
 
+/dev/alarm                0664   system     radio
 /dev/genlock              0666   system     system
 /dev/kgsl                 0666   system     system
 /dev/kgsl-3d0             0666   system     system
