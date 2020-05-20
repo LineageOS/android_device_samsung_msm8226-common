@@ -37,27 +37,16 @@
 
 using android::init::property_set;
 
-void set_rild_libpath(char const variant[])
-{
-    std::string libpath("/system/vendor/lib/libsec-ril.");
-    libpath += variant;
-    libpath += ".so";
-
-    property_override("rild.libpath", libpath.c_str());
-}
-
 void cdma_properties(char const operator_alpha[],
         char const operator_numeric[],
         char const default_cdma_sub[],
-        char const default_network[],
-        char const rild_lib_variant[])
+        char const default_network[])
 {
     // Dynamic CDMA Properties
     property_set("ro.cdma.home.operator.alpha", operator_alpha);
     property_set("ro.cdma.home.operator.numeric", operator_numeric);
     property_set("ro.telephony.default_cdma_sub", default_cdma_sub);
     property_set("ro.telephony.default_network", default_network);
-    set_rild_libpath(rild_lib_variant);
 
     // Static CDMA Properties
     property_set("ril.subscription.types", "NV,RUIM");
@@ -65,10 +54,8 @@ void cdma_properties(char const operator_alpha[],
 }
 
 void gsm_properties(const char default_network[],
-        char const lteOnGsmDevice[], char const rild_lib_variant[])
+        char const lteOnGsmDevice[])
 {
-    set_rild_libpath(rild_lib_variant);
-
     // Dynamic GSM Properties
     property_set("ro.telephony.default_network", default_network);
     property_set("telephony.lteOnGsmDevice", lteOnGsmDevice);
