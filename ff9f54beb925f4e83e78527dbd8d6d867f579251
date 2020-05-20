@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a6b0485e_33cac0aa",
+        "filename": "sepolicy/common/hal_sensors_default.te",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 26067
+      },
+      "writtenOn": "2020-05-20T07:59:52Z",
+      "side": 1,
+      "message": "Paths are labelled and policy is updated in Patchset 2",
+      "parentUuid": "0d43edfa_42b12775",
+      "revId": "ff9f54beb925f4e83e78527dbd8d6d867f579251",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6f6a4aa_a6ade421",
         "filename": "sepolicy/common/hal_sensors_default.te",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5cc72f56_19c477c6",
+        "filename": "sepolicy/common/hal_sensors_default.te",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 26067
+      },
+      "writtenOn": "2020-05-20T07:59:52Z",
+      "side": 1,
+      "message": "Paths are labelled and policy is updated in Patchset 2",
+      "parentUuid": "b6f6a4aa_a6ade421",
+      "revId": "ff9f54beb925f4e83e78527dbd8d6d867f579251",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e157ece2_bbf59c7f",
         "filename": "sepolicy/common/init.te",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "ff9f54beb925f4e83e78527dbd8d6d867f579251",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3940d45_4a483079",
+        "filename": "sepolicy/common/init.te",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 26067
+      },
+      "writtenOn": "2020-05-20T07:59:52Z",
+      "side": 1,
+      "message": "Paths are labelled and policy is updated in Patchset 2",
+      "parentUuid": "e157ece2_bbf59c7f",
+      "revId": "ff9f54beb925f4e83e78527dbd8d6d867f579251",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
