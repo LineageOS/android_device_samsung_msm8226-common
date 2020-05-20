@@ -65,15 +65,13 @@ void cdma_properties(char const operator_alpha[],
 }
 
 void gsm_properties(const char default_network[],
-        char const rild_lib_variant[])
+        char const lteOnGsmDevice[], char const rild_lib_variant[])
 {
     set_rild_libpath(rild_lib_variant);
 
     // Dynamic GSM Properties
     property_set("ro.telephony.default_network", default_network);
-
-    // Static GSM Properties
-    property_set("telephony.lteOnGsmDevice", "1");
+    property_set("telephony.lteOnGsmDevice", lteOnGsmDevice);
 }
 
 void property_override(char const prop[], char const value[])
