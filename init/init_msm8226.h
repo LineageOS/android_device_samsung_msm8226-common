@@ -37,7 +37,7 @@ void cdma_properties(char const operator_alpha[],
         char const default_network[],
         char const rild_lib_variant[]);
 void gsm_properties(char const default_network[],
-        char const rild_lib_variant[]);
+        char const lteOnGsmDevice[], char const rild_lib_variant[]);
 void init_target_properties();
 void property_override(char const prop[], char const value[]);
 void property_override_dual(char const system_prop[],
