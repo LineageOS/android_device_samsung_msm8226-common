@@ -61,6 +61,14 @@ void gsm_properties(const char default_network[],
     property_set("telephony.lteOnGsmDevice", lteOnGsmDevice);
 }
 
+void wifi_properties(char const carrier[],
+        char const noril[])
+{
+    // Dynamic Wi-Fi Properties
+    property_set("ro.carrier", carrier);
+    property_set("ro.radio.noril", noril);
+}
+
 void property_override(char const prop[], char const value[])
 {
     prop_info *pi;
