@@ -37,6 +37,8 @@ void cdma_properties(char const operator_alpha[],
         char const default_network[]);
 void gsm_properties(char const default_network[],
         char const lteOnGsmDevice[]);
+void wifi_properties(char const carrier[],
+        char const noril[]);
 void init_target_properties();
 void property_override(char const prop[], char const value[]);
 void property_override_dual(char const system_prop[],
