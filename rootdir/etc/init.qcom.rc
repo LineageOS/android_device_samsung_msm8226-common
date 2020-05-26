@@ -155,9 +155,6 @@ on post-fs-data
     mkdir /data/fota 0771
     chown system system /data/fota
 
-    # Create /data/time folder for time-services
-    mkdir /data/time/ 0700 system system
-
     mkdir /data/bluetooth 0770 bluetooth bluetooth
     # Enable the setgid bit on the directory
     chmod 2770 /data/bluetooth
@@ -657,12 +654,6 @@ service thermal-engine /vendor/bin/thermal-engine -c /vendor/etc/thermal-engine-
    socket thermal-recv-client stream 0660 system system
    socket thermal-recv-passive-client stream 0666 system system
    group root   
-
-service time_daemon /vendor/bin/time_daemon
-    capabilities SYS_TIME
-    class late_start
-    user system
-    group net_raw
 
 service wcnss-service /system/bin/wcnss_service
     class late_start
