@@ -1,5 +1,6 @@
 allow system_server sysfs_input:file write;
 allow system_server sensors_device:chr_file ioctl;
+allow system_server sysfs_vibamp:file write
 
 allow system_server {
     efs_file
