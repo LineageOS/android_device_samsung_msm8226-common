@@ -1,4 +1,3 @@
-allow system_server sysfs_input:file write;
 allow system_server sensors_device:chr_file ioctl;
 
 allow system_server {
@@ -13,8 +12,10 @@ allow system_server {
 
 allow system_server {
     sysfs_sec_ir
+    sysfs_input
     sysfs_sec_led
     sysfs_sec_touchkey
+    sysfs_vibamp
 }:file w_file_perms;
 
 allow system_server unlabeled:file unlink;
