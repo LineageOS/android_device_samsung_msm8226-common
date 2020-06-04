@@ -1,5 +1,6 @@
 allow init efs_file:dir mounton;
 allow init cpuset_device:file create_file_perms;
+allow init self:capability2 block_suspend;
 allow init sysfs_ausb:file rw_file_perms;
 allow init sysfs_vibamp:file r_file_perms;
 
@@ -8,9 +9,8 @@ allow init {
     sysfs_leds
 }:lnk_file read;
 
-allow init { 
+allow init {
     sysfs_ausb
     sysfs_devfreq
-    sysfs_vibamp 
+    sysfs_vibamp
 }:file setattr;
-
