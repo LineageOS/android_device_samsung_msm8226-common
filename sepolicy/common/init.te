@@ -4,13 +4,8 @@
 # to read any system_data_file:lnk_file.
 selinux_check_context(init)
 
-allow init sysfs_net:file { open write };
-allow init wcnss_device:chr_file write;
-allow init sysfs_ausb:file { open setattr write };
-allow init sysfs_ausb:lnk_file read;
-allow init sysfs_vibamp:file setattr;
-
 allow init {
+    sysfs_ausb
     sysfs_iio
     sysfs_sec_tsp
     sysfs_sensors
@@ -18,6 +13,7 @@ allow init {
 
 allow init {
     sysfs_audio
+    sysfs_ausb
     sysfs_batteryinfo
     sysfs_bluetooth_writable
     sysfs_camera
@@ -42,16 +38,19 @@ allow init {
     sysfs_sensors
     sysfs_socinfo
     sysfs_usb_otg
+    sysfs_vibamp
     sysfs_wifi_writeable
 }:file setattr;
 
 allow init {
+    sysfs_ausb
     sysfs_cpu_boost
     sysfs_devices_system_cpu
     sysfs_lowmemorykiller
     sysfs_mmc_host
     sysfs_msm_perf
     sysfs_msm_power
+    sysfs_net
     sysfs_sec_key
     sysfs_thermal
 }:file w_file_perms;
