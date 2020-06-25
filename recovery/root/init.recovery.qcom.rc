@@ -1,2 +1,5 @@
 on fs
+    wait /dev/block/platform/msm_sdcc.1
+    symlink /dev/block/platform/msm_sdcc.1 /dev/block/bootdevice
+
     setprop sys.usb.ffs.aio_compat 1
