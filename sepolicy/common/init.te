@@ -40,6 +40,7 @@ allow init {
     sysfs_usb_otg
     sysfs_vibamp
     sysfs_wifi_writeable
+    sysfs
 }:file setattr;
 
 allow init {
@@ -52,6 +53,8 @@ allow init {
     sysfs_msm_power
     sysfs_sec_key
     sysfs_thermal
+    sysfs_net
 }:file w_file_perms;
 
+dontaudit init wcnss_device:chr_file write;
 allow init sysfs_devfreq:file setattr;
