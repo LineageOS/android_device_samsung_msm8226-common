@@ -78,7 +78,7 @@ on init
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay "25000 109440:50000"
+    write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay "25000 1094400:50000"
     write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 90
     write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1094400
     write /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 0
@@ -96,7 +96,7 @@ on init
 
     # Configure the cpu-boost module
     write /sys/module/cpu_boost/parameters/boost_ms 20
-    write /sys/module/cpu_boost/parameters/sync_threshold 998000
+    write /sys/module/cpu_boost/parameters/sync_threshold 998400
     write /sys/module/cpu_boost/parameters/input_boost_freq 1094400
     write /sys/module/cpu_boost/parameters/input_boost_ms 40
 
