@@ -5,3 +5,8 @@ allow system_app proc_pagetypeinfo:file getattr;
 allow system_app sysfs_zram:dir search;
 allow system_app sysfs_zram:file { open read };
 allow system_app sysfs_zram:file getattr;
+
+dontaudit system_app {
+  apex_service
+  system_suspend_control_service
+}:service_manager find;
