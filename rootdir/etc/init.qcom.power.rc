@@ -62,17 +62,6 @@ on init
     # disable thermal core_control to update governor settings
     write /sys/module/msm_thermal/core_control/enabled 0
 
-    # Bring all CPUs online, and set node permissions
-    write /sys/devices/system/cpu/cpu1/online 1
-    write /sys/devices/system/cpu/cpu2/online 1
-    write /sys/devices/system/cpu/cpu3/online 1
-    chmod 664 /sys/devices/system/cpu/cpu1/online
-    chmod 664 /sys/devices/system/cpu/cpu2/online
-    chmod 664 /sys/devices/system/cpu/cpu3/online
-    chown root system /sys/devices/system/cpu/cpu1/online
-    chown root system /sys/devices/system/cpu/cpu2/online
-    chown root system /sys/devices/system/cpu/cpu3/online
-
     # Switch to interactive gonvernor and configure it
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
@@ -90,6 +79,13 @@ on init
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 787200
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 787200
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 787200
+
+    chown root system /sys/devices/system/cpu/cpu1/online
+    chown root system /sys/devices/system/cpu/cpu2/online
+    chown root system /sys/devices/system/cpu/cpu3/online
+    chmod 664 /sys/devices/system/cpu/cpu1/online
+    chmod 664 /sys/devices/system/cpu/cpu2/online
+    chmod 664 /sys/devices/system/cpu/cpu3/online
 
     # enable thermal core_control now
     write /sys/module/msm_thermal/core_control/enabled 1
