@@ -37,8 +37,6 @@
 
 #include "init_msm8226.h"
 
-using android::init::property_set;
-
 // copied from build/tools/releasetools/ota_from_target_files.py
 // but with "." at the end and empty entry
 std::vector<std::string> ro_product_props_default_source_order = {
@@ -49,30 +47,6 @@ std::vector<std::string> ro_product_props_default_source_order = {
     "vendor.",
     "system.",
 };
-
-void cdma_properties(char const operator_alpha[],
-        char const operator_numeric[],
-        char const default_cdma_sub[],
-        char const default_network[])
-{
-    // Dynamic CDMA Properties
-    property_set("ro.cdma.home.operator.alpha", operator_alpha);
-    property_set("ro.cdma.home.operator.numeric", operator_numeric);
-    property_set("ro.telephony.default_cdma_sub", default_cdma_sub);
-    property_set("ro.telephony.default_network", default_network);
-
-    // Static CDMA Properties
-    property_set("ril.subscription.types", "NV,RUIM");
-    property_set("telephony.lteOnCdmaDevice", "1");
-}
-
-void gsm_properties(const char default_network[],
-        char const lteOnGsmDevice[])
-{
-    // Dynamic GSM Properties
-    property_set("ro.telephony.default_network", default_network);
-    property_set("telephony.lteOnGsmDevice", lteOnGsmDevice);
-}
 
 void wifi_properties(char const carrier[],
         char const noril[])
@@ -91,6 +65,30 @@ void property_override(char const prop[], char const value[], bool add)
     } else if (add) {
         __system_property_add(prop, strlen(prop), value, strlen(value));
     }
+}
+
+void cdma_properties(char const operator_alpha[],
+        char const operator_numeric[],
+        char const default_cdma_sub[],
+        char const default_network[])
+{
+    // Dynamic CDMA Properties
+    property_override("ro.cdma.home.operator.alpha", operator_alpha);
+    property_override("ro.cdma.home.operator.numeric", operator_numeric);
+    property_override("ro.telephony.default_cdma_sub", default_cdma_sub);
+    property_override("ro.telephony.default_network", default_network);
+
+    // Static CDMA Properties
+    property_override("ril.subscription.types", "NV,RUIM");
+    property_override("telephony.lteOnCdmaDevice", "1");
+}
+
+void gsm_properties(const char default_network[],
+        char const lteOnGsmDevice[])
+{
+    // Dynamic GSM Properties
+    property_override("ro.telephony.default_network", default_network);
+    property_override("telephony.lteOnGsmDevice", lteOnGsmDevice);
 }
 
 void set_ro_product_prop(char const prop[], char const value[])
