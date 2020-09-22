@@ -161,7 +161,7 @@ PRODUCT_PACKAGES += \
 
 # Power HAL
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.2-service-qti
+    android.hardware.power-service-qti
     
 # Preopt
 PRODUCT_DEXPREOPT_SPEED_APPS += \
