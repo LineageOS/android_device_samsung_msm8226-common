@@ -88,6 +88,7 @@ TARGET_FS_CONFIG_GEN := device/samsung/msm8226-common/config.fs
 # HIDL
 DEVICE_MANIFEST_FILE := device/samsung/msm8226-common/manifest.xml
 DEVICE_MATRIX_FILE := device/samsung/msm8226-common/compatibility_matrix.xml
+PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := true
 
 # Keymaster
 TARGET_KEYMASTER_SKIP_WAITING_FOR_QSEE := true
