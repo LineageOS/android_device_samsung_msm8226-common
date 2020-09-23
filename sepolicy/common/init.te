@@ -5,6 +5,7 @@
 selinux_check_context(init)
 
 allow init {
+    sysfs_ausb
     sysfs_iio
     sysfs_sec_tsp
     sysfs_sensors
@@ -12,6 +13,7 @@ allow init {
 
 allow init {
     sysfs_audio
+    sysfs_ausb
     sysfs_batteryinfo
     sysfs_bluetooth_writable
     sysfs_camera
@@ -36,21 +38,18 @@ allow init {
     sysfs_sensors
     sysfs_socinfo
     sysfs_usb_otg
+    sysfs_vibamp
     sysfs_wifi_writeable
 }:file setattr;
 
 allow init {
+    sysfs_ausb
     sysfs_cpu_boost
     sysfs_devices_system_cpu
     sysfs_lowmemorykiller
     sysfs_mmc_host
     sysfs_msm_perf
     sysfs_msm_power
-    sysfs_net
     sysfs_sec_key
     sysfs_thermal
 }:file w_file_perms;
-
-allow init {
-    wcnss_device
-}:chr_file w_file_perms;

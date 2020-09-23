@@ -14,7 +14,7 @@
 # limitations under the License.
 
 # inherit from qcom-common
--include device/samsung/qcom-common/BoardConfigCommon.mk
+include device/samsung/qcom-common/BoardConfigCommon.mk
 
 # Platform
 TARGET_BOARD_PLATFORM := msm8226
@@ -91,10 +91,6 @@ TARGET_KEYMASTER_SKIP_WAITING_FOR_QSEE := true
 
 # SELinux
 include device/samsung/msm8226-common/sepolicy/sepolicy.mk
-
-# Init
-TARGET_INIT_VENDOR_LIB := libinit_msm8226
-TARGET_RECOVERY_DEVICE_MODULES := libinit_msm8226
 
 # Optimize
 PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
