@@ -7,7 +7,7 @@ allow bluetooth proc_bt_sleep:dir search;
 allow bluetooth proc_bt_sleep:file w_file_perms;
 
 allow bluetooth_loader bluetooth_efs_file:dir search;
-allow bluetooth_loader bluetooth_efs_file:file { open read };
+allow bluetooth_loader bluetooth_efs_file:file r_file_perms;
 allow bluetooth_loader efs_file:dir search;
 allow bluetooth_loader bluetooth_efs_file:file getattr;
 
