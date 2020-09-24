@@ -1,6 +1,7 @@
 allow system_server sensors_device:chr_file ioctl;
 
 allow system_server {
+    cpuset_device
     efs_file
     mpctl_data_file
 }:dir search;
@@ -11,11 +12,10 @@ allow system_server {
 }:file r_file_perms;
 
 allow system_server {
+    sysfs_ausb
     sysfs_sec_ir
     sysfs_input
     sysfs_sec_led
     sysfs_sec_touchkey
     sysfs_vibamp
 }:file w_file_perms;
-
-allow system_server unlabeled:file unlink;
