@@ -1,3 +1,1 @@
-allow surfaceflinger sysfs:file read;
-allow surfaceflinger sysfs:file open;
-allow surfaceflinger sysfs:file getattr;
+allow surfaceflinger sysfs_graphics:file r_file_perms;
