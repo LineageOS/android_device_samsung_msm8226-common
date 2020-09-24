@@ -15,6 +15,7 @@ allow hal_sensors_default {
     sysfs_graphics
     sysfs_leds
     sysfs_sec_thermistor
+    sysfs_sound
 }:dir search;
 
 allow hal_sensors_default {
@@ -26,15 +27,11 @@ allow hal_sensors_default {
 allow hal_sensors_default {
     sysfs_iio
     sysfs_input
+    sysfs_sound
+    sensors_data_file
 }:file rw_file_perms;
 
 allow hal_sensors_default {
     sysfs_iio
     sysfs_input
 }:lnk_file read;
-
-allow hal_sensors_default system_data_file:file write;
-allow hal_sensors_default sysfs:dir read;
-allow hal_sensors_default sysfs:dir open;
-allow hal_sensors_default sysfs:file read;
-allow hal_sensors_default system_data_file:file { open read getattr };
