@@ -1,1 +1,12 @@
 allow init efs_file:dir mounton;
+allow init cpuset_device:file create_file_perms;
+allow init sysfs_ausb:file rw_file_perms;
+allow init sysfs_ausb:lnk_file read;
+allow init sysfs_leds:lnk_file read;
+allow init sysfs_vibamp:file r_file_perms;
+
+allow init { 
+    sysfs_ausb
+    sysfs_vibamp 
+}:file setattr;
+
