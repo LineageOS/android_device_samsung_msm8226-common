@@ -64,6 +64,10 @@ on fs
     # Kickstart the Wireless subsystem
     write /dev/wcnss_wlan 1
 
+    # Adaptive LMK
+    write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
+    write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 53059
+
     # GnssConfiguration doesn't actually look at gps.conf, just the debug file
     mount none /system/etc/gps.conf /system/etc/gps_debug.conf bind
     
