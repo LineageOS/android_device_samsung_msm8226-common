@@ -169,8 +169,7 @@ PRODUCT_DEXPREOPT_SPEED_APPS += \
 
 # Ramdisk
 PRODUCT_PACKAGES += \
-    init.qcom.bt.sh \
-    init.ril.sh
+    init.qcom.bt.sh
 
 PRODUCT_PACKAGES += \
     init.qcom.power.rc \
