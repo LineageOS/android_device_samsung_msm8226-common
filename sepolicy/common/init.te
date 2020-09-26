@@ -53,3 +53,7 @@ allow init {
     sysfs_sec_key
     sysfs_thermal
 }:file w_file_perms;
+
+dontaudit init wcnss_device:chr_file { open write };
+dontaudit init sysfs_net:file w_file_perms;
+allow init system_file:dir relabelfrom;

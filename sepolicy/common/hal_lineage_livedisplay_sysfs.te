@@ -12,6 +12,3 @@ allow hal_lineage_livedisplay_sysfs {
     sysfs_graphics
     sysfs_mdnie
 }:file rw_file_perms;
-
-allow hal_lineage_livedisplay_sysfs sysfs:file { open read write };
-allow hal_lineage_livedisplay_sysfs sysfs:file getattr;
