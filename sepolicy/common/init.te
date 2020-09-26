@@ -40,6 +40,7 @@ allow init {
     sysfs_usb_otg
     sysfs_vibamp
     sysfs_wifi_writeable
+    sysfs
 }:file setattr;
 
 allow init {
@@ -52,6 +53,13 @@ allow init {
     sysfs_msm_power
     sysfs_sec_key
     sysfs_thermal
+    sysfs_net
 }:file w_file_perms;
 
 allow init sysfs_devfreq:file setattr;
+allow init system_file:dir relabelfrom;
+allow init vendor_file:file execute_no_trans;
+dontaudit init wcnss_device:chr_file write;
+allow init hwservicemanager:binder { call transfer };
+allow init hal_ir_hwservice:hwservice_manager add;
+allow init hidl_base_hwservice:hwservice_manager add;
