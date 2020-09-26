@@ -6,6 +6,3 @@ allow rild radio_data_file:lnk_file read;
 
 allow rild proc_net:file w_file_perms;
 allow rild sysfs_sec_key:file rw_file_perms;
-allow rild unlabeled:dir search;
-
-allow rild unlabeled:file { getattr open read };
