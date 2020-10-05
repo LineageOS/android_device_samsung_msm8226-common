@@ -131,9 +131,7 @@ PRODUCT_COPY_FILES += \
 
 # Offline Charger
 PRODUCT_PACKAGES += \
-    charger \
-    charger_res_images \
-    lineage_charger_res_images
+    charger_res_images
 
 # OMX
 PRODUCT_PACKAGES += \
