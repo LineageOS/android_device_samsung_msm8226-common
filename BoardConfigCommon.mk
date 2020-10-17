@@ -87,6 +87,9 @@ PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := true
 # Keymaster
 TARGET_KEYMASTER_SKIP_WAITING_FOR_QSEE := true
 
+# Legacy memfd
+TARGET_HAS_MEMFD_BACKPORT := true
+
 # SELinux
 include device/samsung/msm8226-common/sepolicy/sepolicy.mk
 
