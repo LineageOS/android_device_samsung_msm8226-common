@@ -1,2 +1,4 @@
 allow hal_light_default sysfs_sec_led:dir rw_dir_perms;
 allow hal_light_default sysfs_sec_led:file rw_file_perms;
+allow hal_light_default sysfs_sec_touchkey:dir rw_file_perms;
+allow hal_light_default sysfs_sec_touchkey:file rw_file_perms;
