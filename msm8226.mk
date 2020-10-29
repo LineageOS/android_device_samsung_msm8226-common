@@ -188,6 +188,10 @@ PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl.samsung8226 \
     android.hardware.sensors@1.0-service.samsung8226
 
+# Soong namespaces
+PRODUCT_SOONG_NAMESPACES += \
+    $(LOCAL_PATH)
+
 # Touch features
 PRODUCT_PACKAGES += \
     vendor.lineage.touch@1.0-service.samsung
