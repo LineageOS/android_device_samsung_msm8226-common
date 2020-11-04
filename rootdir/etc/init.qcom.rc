@@ -578,6 +578,8 @@ on boot
     # Mark wifi driver as unloaded - "ok" indicates loaded
     setprop wlan.driver.status not_ok
 
+    setprop init.svc.console stopped
+
 on property:dev.bootcomplete=1
     setprop sys.io.scheduler "bfq"
 
