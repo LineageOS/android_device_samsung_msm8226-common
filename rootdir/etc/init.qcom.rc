@@ -575,6 +575,8 @@ on boot
     chmod 0660 /sys/module/wlan/parameters/fwpath
     chown wifi wifi /sys/module/wlan/parameters/fwpath
 
+    setprop init.svc.console stopped
+
 on property:dev.bootcomplete=1
     setprop sys.io.scheduler "bfq"
 
