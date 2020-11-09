@@ -189,7 +189,8 @@ PRODUCT_COPY_FILES += \
 # Sensors
 PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl.samsung8226 \
-    android.hardware.sensors@1.0-service.samsung8226
+    android.hardware.sensors@1.0-service.samsung8226 \
+    sensors.msm8226
 
 # TimeKeep
 PRODUCT_PACKAGES += \
