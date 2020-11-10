@@ -13,7 +13,9 @@ LOCAL_SRC_FILES:= \
     ril_event.cpp\
     RilSapSocket.cpp \
     ril_service.cpp \
-    sap_service.cpp
+    sap_service.cpp \
+    strdup16to8.cpp \
+    strdup8to16.cpp
 
 LOCAL_SHARED_LIBRARIES := \
     liblog \
