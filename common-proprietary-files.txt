@@ -45,4 +45,4 @@ vendor/lib/libstlport.so|0be0a0d13e12fbf95d97d309dcbc25d3f969a469
 vendor/lib/libtime_genoff.so|ffb08547c733760c151b08977a04694b4bc84df1
 
 # Widevine (Google angler - OPR6.170623.017)
-vendor/lib/mediadrm/libwvdrmengine.so|66ba66d047044f92eb0eada1faf6a5799ded90ab
+vendor/lib/mediadrm/libwvdrmengine.so|6bbe155911eede109e64128517062cd0f8eb7cd3

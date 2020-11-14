@@ -170,6 +170,10 @@ PRODUCT_DEXPREOPT_SPEED_APPS += \
     SystemUI \
     TrebuchetQuickStep
 
+# Protobuf
+PRODUCT_PACKAGES += \
+    libprotobuf-cpp-lite-vendorcompat
+
 # Ramdisk
 PRODUCT_PACKAGES += \
     init.qcom.bt.sh
