@@ -575,9 +575,6 @@ on boot
     chmod 0660 /sys/module/wlan/parameters/fwpath
     chown wifi wifi /sys/module/wlan/parameters/fwpath
 
-    # Mark wifi driver as unloaded - "ok" indicates loaded
-    setprop wlan.driver.status not_ok
-
 on property:dev.bootcomplete=1
     setprop sys.io.scheduler "bfq"
 
