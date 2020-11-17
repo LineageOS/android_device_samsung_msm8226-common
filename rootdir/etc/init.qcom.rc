@@ -270,7 +270,7 @@ on boot
     # Permissions for bluetooth
     mkdir /efs/bluetooth 0775 radio system
     setprop ro.bt.bdaddr_path "/efs/bluetooth/bt_addr"
-    chown bluetooth net_bt_stack ro.bt.bdaddr_path
+    chown bluetooth bluetooth ro.bt.bdaddr_path
     chown radio bluetooth /efs/bluetooth/bt_addr
     chmod 0755 /efs/bluetooth/bt_addr
     restorecon_recursive /efs/bluetooth
