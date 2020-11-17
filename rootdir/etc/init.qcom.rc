@@ -518,7 +518,7 @@ on boot
 
     # Vibetonz
     chmod 0660 /dev/tspdrv
-    chown vibe vibe /dev/tspdrv
+    chown system system /dev/tspdrv
 
     # Vibrator
     chmod 0644 /sys/class/timed_output/vibrator/pwm_value
