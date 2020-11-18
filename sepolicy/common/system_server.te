@@ -8,6 +8,7 @@ allow system_server {
 
 allow system_server {
     efs_file
+    proc_last_kmsg
     qti_debugfs
 }:file r_file_perms;
 
