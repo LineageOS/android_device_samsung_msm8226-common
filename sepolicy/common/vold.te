@@ -11,4 +11,6 @@ allow vold {
 allowxperm vold vold_device:blk_file ioctl 0x1271;
 allowxperm vold vold_device:blk_file ioctl BLKROGET;
 
+allow vold sysfs_mmc_host:file w_file_perms;
+
 dontaudit vold hal_bootctl_hwservice:hwservice_manager find;
