@@ -6,7 +6,6 @@
 /data/.cid.info                                         u:object_r:wifi_data_file:s0
 /data/.psm.info                                         u:object_r:wifi_data_file:s0
 /data/.wifiver.info                                     u:object_r:wifi_data_file:s0
-/data/system/yas_lib.cfg                                u:object_r:sensors_data_file:s0
 
 # device nodes
 /dev/alarm                                              u:object_r:alarm_device:s0

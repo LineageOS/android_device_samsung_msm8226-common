@@ -28,7 +28,7 @@ allow hal_sensors_default {
     sysfs_iio
     sysfs_input
     sysfs_sound
-    sensors_data_file
+    system_data_file
 }:file rw_file_perms;
 
 allow hal_sensors_default {
