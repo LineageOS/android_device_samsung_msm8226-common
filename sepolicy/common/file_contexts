@@ -45,6 +45,7 @@
 /persist                                                u:object_r:persist_file:s0
  
 # sockets
+/data/cam_socket2                                       u:object_r:camera_socket:s0
 /data/cam_socket3                                       u:object_r:camera_socket:s0
 
 # sysfs
