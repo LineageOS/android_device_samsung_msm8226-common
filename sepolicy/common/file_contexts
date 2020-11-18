@@ -3,10 +3,10 @@
 /dev/block/platform/msm_sdcc\.1/by-name/fota            u:object_r:misc_block_device:s0
 
 # data files
-/data/.cid.info                                         u:object_r:wifi_data_file:s0
-/data/.psm.info                                         u:object_r:wifi_data_file:s0
-/data/.wifiver.info                                     u:object_r:wifi_data_file:s0
-/data/system/yas_lib.cfg                                u:object_r:sensors_data_file:s0
+/data/\.cid\.info                                         u:object_r:wifi_data_file:s0
+/data/\.psm\.info                                         u:object_r:wifi_data_file:s0
+/data/\.wifiver\.info                                     u:object_r:wifi_data_file:s0
+/data/system/yas_lib\.cfg                                 u:object_r:sensors_data_file:s0
 
 # device nodes
 /dev/alarm                                              u:object_r:alarm_device:s0
