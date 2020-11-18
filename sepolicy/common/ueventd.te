@@ -1,3 +1,7 @@
 allow ueventd vfat:dir search;
-allow ueventd vfat:file { getattr open read };
 allow ueventd self:capability sys_nice;
+
+allow ueventd {
+    sysfs_dt_firmware_android
+    vfat
+}:file r_file_perms;
