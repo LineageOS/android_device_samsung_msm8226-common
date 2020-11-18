@@ -36,6 +36,9 @@
 /(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch@1\.0-service\.samsung               u:object_r:hal_lineage_touch_default_exec:s0
 /(vendor|system/vendor)/bin/hw/android\.hardware\.light@2\.0-service\.samsung             u:object_r:hal_light_default_exec:s0
 
+# proc - cpu
+/proc/cpu/alignment                                     u:object_r:proc_cpu_alignment:s0
+
 # rootfs
 /firmware-modem                                         u:object_r:firmware_file:s0
 /tombstones                                             u:object_r:rootfs:s0
