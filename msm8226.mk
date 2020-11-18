@@ -203,10 +203,6 @@ PRODUCT_PACKAGES += \
     timekeep \
     TimeKeep
 
-# Touch features
-PRODUCT_PACKAGES += \
-    vendor.lineage.touch@1.0-service.samsung
-
 # USB
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-service.basic
