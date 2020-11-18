@@ -12,5 +12,6 @@ allow init {
     sysfs_ausb
     sysfs_devfreq
     sysfs_vibamp 
+    proc_last_kmsg
 }:file setattr;
 
