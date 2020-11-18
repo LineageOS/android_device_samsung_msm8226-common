@@ -1,5 +1,5 @@
 allow mediaserver sysfs_camera:dir search;
 allow mediaserver sysfs_camera:file r_file_perms;
 allow mediaserver vendor_file:file execmod;
-allow mediaserver system_data_file:sock_file write;
+allow mediaserver system_data_root_file:sock_file write;
 allow mediaserver hal_lineage_camera_motor_hwservice:hwservice_manager find;
