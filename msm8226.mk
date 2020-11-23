@@ -51,7 +51,6 @@ PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-impl \
     android.hardware.audio@2.0-service \
     android.hardware.audio.effect@2.0-impl \
-    audio_policy.msm8226 \
     audio.a2dp.default \
     audio.primary.msm8226 \
     audio.r_submix.default \
