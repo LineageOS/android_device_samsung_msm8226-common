@@ -117,6 +117,9 @@ TARGET_RECOVERY_DEVICE_DIRS += device/samsung/msm8226-common
 # Time services
 BOARD_USES_QC_TIME_SERVICES := true
 
+# VNDK - Dedupe VNDK libraries with identical core variants.
+TARGET_VNDK_USE_CORE_VARIANT := true
+
 # Wifi
 BOARD_WLAN_DEVICE                := qcwcn
 BOARD_HAS_QCOM_WLAN              := true
