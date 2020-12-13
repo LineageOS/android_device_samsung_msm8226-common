@@ -71,14 +71,15 @@ on fs
     # GnssConfiguration doesn't actually look at gps.conf, just the debug file
     mount none /system/etc/gps.conf /system/etc/gps_debug.conf bind
     
+    # Start HW service manager early
+    start hwservicemanager
+
 on late-fs
     # Start services for bootanim
     start servicemanager
     start surfaceflinger
     start bootanim
     
-    # Make sure HW service manager started and start required HAL services
-    wait_for_prop hwservicemanager.ready true
     start configstore-hal-1-0
     start gralloc-2-0
 
