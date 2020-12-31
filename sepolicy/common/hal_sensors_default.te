@@ -1,6 +1,10 @@
 r_dir_file(hal_sensors_default, efs_file)
 
 allow hal_sensors_default {
+    system_data_file
+}:file create_file_perms;
+
+allow hal_sensors_default {
     iio_device
     sensors_device
 }:chr_file r_file_perms;
@@ -9,6 +13,10 @@ allow hal_sensors_default {
     sysfs_iio
     sysfs_input
 }:dir r_dir_perms;
+
+allow hal_sensors_default {
+    system_data_file
+}:dir rw_dir_perms;
 
 allow hal_sensors_default {
     sysfs_batteryinfo
@@ -28,7 +36,7 @@ allow hal_sensors_default {
     sysfs_iio
     sysfs_input
     sysfs_sound
-    sensors_data_file
+    system_data_file
 }:file rw_file_perms;
 
 allow hal_sensors_default {
