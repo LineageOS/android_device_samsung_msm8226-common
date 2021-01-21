@@ -62,7 +62,6 @@ USE_DEX2OAT_DEBUG := false
 DONT_DEXPREOPT_PREBUILTS := true
 
 # Display
-OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so
 TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x2000U | 0x02000000U
 
 # Shader cache config options
