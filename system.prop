@@ -5,6 +5,9 @@ av.offload.enable=true
 ro.af.client_heap_size_kbyte=7168
 ro.audio.flinger_standbytime_ms=300
 
+# Bluetooth
+bluetooth.enable_timeout_ms=12000
+
 # Dalvik
 dalvik.vm.heapstartsize=16m
 dalvik.vm.heapgrowthlimit=192m
