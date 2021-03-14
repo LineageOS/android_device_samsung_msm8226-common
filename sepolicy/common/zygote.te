@@ -1,1 +1,2 @@
 dontaudit zygote proc_cmdline:file r_file_perms;
+allow zygote system_file:dir mounton;
