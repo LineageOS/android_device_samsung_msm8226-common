@@ -188,11 +188,6 @@ PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl.samsung8226 \
     android.hardware.sensors@1.0-service.samsung8226
 
-# TimeKeep
-PRODUCT_PACKAGES += \
-    timekeep \
-    TimeKeep
-
 # Touch features
 PRODUCT_PACKAGES += \
     vendor.lineage.touch@1.0-service.samsung
