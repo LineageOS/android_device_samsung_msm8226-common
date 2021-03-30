@@ -202,11 +202,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH)
 
-# TimeKeep
-PRODUCT_PACKAGES += \
-    timekeep \
-    TimeKeep
-
 # USB
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-service.basic
