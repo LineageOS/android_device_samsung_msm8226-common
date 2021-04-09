@@ -1,5 +1,5 @@
 # Copyright (C) 2012 The CyanogenMod Project
-# Copyright (C) 2017-2019 The LineageOS Project
+# Copyright (C) 2017-2021 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -102,7 +102,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/gps/etc/gps.conf:system/etc/gps.conf \
     $(LOCAL_PATH)/gps/etc/izat.conf:system/etc/izat.conf \
     $(LOCAL_PATH)/gps/etc/sap.conf:system/etc/sap.conf
-    
+
 # Health
 PRODUCT_PACKAGES += \
     android.hardware.health@2.0-impl \
@@ -148,7 +148,7 @@ PRODUCT_PACKAGES += \
 # Power HAL
 PRODUCT_PACKAGES += \
     android.hardware.power@1.1-service-qti
-    
+
 # Preopt
 PRODUCT_DEXPREOPT_SPEED_APPS += \
     Settings \
@@ -213,7 +213,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prima/WCNSS_qcom_cfg.ini:system/etc/firmware/wlan/prima/WCNSS_qcom_cfg.ini \
     $(LOCAL_PATH)/prima/WCNSS_qcom_wlan_nv.bin:system/etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin
 # Get non-open-source specific aspects
-$(call inherit-product-if-exists, vendor/samsung/msm8226-common/msm8226-common-vendor.mk)
+$(call inherit-product, vendor/samsung/msm8226-common/msm8226-common-vendor.mk)
 
 # common msm8226
 $(call inherit-product, device/samsung/qcom-common/qcom-common.mk)
