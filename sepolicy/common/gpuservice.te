@@ -1,1 +1,3 @@
 allow gpuservice opengles_prop:file r_file_perms;
+
+get_prop(gpuservice, graphics_config_prop)
