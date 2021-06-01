@@ -39,7 +39,7 @@
 /firmware-modem                                         u:object_r:firmware_file:s0
 /tombstones                                             u:object_r:rootfs:s0
 /persist                                                u:object_r:persist_file:s0
- 
+
 # sockets
 /data/cam_socket2                                       u:object_r:camera_socket:s0
 /data/cam_socket3                                       u:object_r:camera_socket:s0
@@ -48,7 +48,7 @@
 /sys/devices/[a-f0-9]+\.uart(/.*)?                      u:object_r:sysfs_msmuart_file:s0
 
 # sysfs - battery/charger
-/sys/devices/battery\.[0-9]+/power_supply(/.*)?                                                 u:object_r:sysfs_batteryinfo:s0
+/sys/devices/battery(.*)/power_supply/(.*)?                                                     u:object_r:sysfs_batteryinfo:s0
 /sys/devices/[a-f0-9]+\.usb/power_supply(/.*)?                                                  u:object_r:sysfs_batteryinfo:s0
 /sys/devices/i2c\.[0-9]+/i2c-[0-9]+/[0-9]+-[a-z0-9]+/max[a-z0-9]+-charger/power_supply(/.*)?    u:object_r:sysfs_batteryinfo:s0
 /sys/devices/i2c\.[0-9]+/i2c-[0-9]+/[0-9]+-[a-z0-9]+/power_supply(/.*)?                         u:object_r:sysfs_batteryinfo:s0
