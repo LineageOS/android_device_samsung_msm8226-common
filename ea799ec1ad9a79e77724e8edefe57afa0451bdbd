@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c82065a_ec1cebb7",
+        "filename": "sepolicy/common/firmware_file.te",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 24387
+      },
+      "writtenOn": "2021-06-27T11:10:47Z",
+      "side": 1,
+      "message": "is it possible to label this?",
+      "revId": "ea799ec1ad9a79e77724e8edefe57afa0451bdbd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b0986b_a2973082",
+        "filename": "sepolicy/common/zygote.te",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 24387
+      },
+      "writtenOn": "2021-06-27T11:10:47Z",
+      "side": 1,
+      "message": "we should not allow this",
+      "revId": "ea799ec1ad9a79e77724e8edefe57afa0451bdbd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
