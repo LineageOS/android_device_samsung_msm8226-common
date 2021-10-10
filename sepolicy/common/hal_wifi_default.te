@@ -1,5 +1,6 @@
 r_dir_file(hal_wifi_default, wifi_efs_file)
 
 allow hal_wifi_default efs_file:dir search;
+allow hal_wifi_default proc_net:file rw_file_perms;
 allow hal_wifi_default sysfs_wifi_writeable:file w_file_perms;
 allow hal_wifi_default wifi_data_file:file r_file_perms;
